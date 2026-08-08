@@ -1,0 +1,27 @@
+@for $i from 1 through 4 {
+  .margin-#{$i} {
+    margin: #{$i * 1}px;
+  }
+}
+
+@for $i from 1 through 4 {
+  .padding-#{$i} {
+    padding: #{$i * 8}px;
+  }
+}
+
+$margin: (
+  zero: 0px,
+  s: 2px,
+  m: 4px,
+  l: 8px,
+  xl: 16px,
+);
+
+@each $name, $size in $margin {
+  .margin-#{$name} {
+    margin: $size;
+  }
+}
+
+$padding: ();

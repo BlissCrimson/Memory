@@ -1,0 +1,8 @@
+@use "./base/mainBase";
+@use "./components/mainComponents";
+
+$--grey-bg: grey;
+
+h1 {
+  color: $--grey-bg;
+}
