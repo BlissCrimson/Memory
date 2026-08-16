@@ -7,9 +7,9 @@ export function createWelcomePage() {
         <h1>Ready to play?</h1>
     </section>
     <button class="button button__entry">
-        <img src="/public/assets/icons/stadia_controller.svg" alt="controller">
+        <img src="./public/assets/icons/stadia_controller.svg" alt="controller">
         <p>Play</p>
-        <img src="/public/assets/icons/arrow.svg" alt="arrow">
+        <img src="./public/assets/icons/arrow.svg" alt="arrow">
     </button>
   `;
 }
