@@ -1,0 +1,87 @@
+@use "../abstract/mixin" as mx;
+@use "../abstract/functions" as fct;
+
+body {
+  background-color: var(--bg__start);
+}
+
+.welcome {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding-left: fct.px-to-rem(120);
+  gap: fct.px-to-rem(16);
+  color: var(--text-start);
+  font-family: "Figtree", sans-serif;
+
+  @include mx.respond(sm) {
+    padding-left: fct.px-to-rem(24);
+  }
+
+  span {
+    color: var(--text-start-muted);
+    font-size: fct.px-to-rem(20);
+  }
+
+  h1 {
+    font-family: "Red Rose", serif;
+    font-weight: 700;
+    font-size: fct.px-to-rem(72);
+    margin: 0;
+
+    @include mx.respond(sm) {
+      font-size: fct.px-to-rem(40);
+    }
+  }
+}
+
+.button__entry {
+  @include mx.flex-row();
+  gap: fct.px-to-rem(12);
+  margin-top: fct.px-to-rem(16);
+  padding: fct.px-to-rem(16) fct.px-to-rem(24);
+  border: none;
+  border-radius: fct.px-to-rem(8);
+  background-color: var(--button-bg);
+  color: var(--text-button);
+  font-family: "Figtree", sans-serif;
+  font-weight: 700;
+  font-size: fct.px-to-rem(18);
+  cursor: pointer;
+  transition: filter 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.img__entry {
+  &--button {
+    width: fct.px-to-rem(22);
+    height: auto;
+  }
+
+  &--big {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+    width: fct.px-to-rem(400);
+    height: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.06;
+    pointer-events: none;
+
+    @include mx.respond(sm) {
+      width: fct.px-to-rem(220);
+    }
+  }
+}

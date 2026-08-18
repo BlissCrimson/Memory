@@ -2,7 +2,11 @@
 @use "../abstract/functions" as fct;
 
 .card {
-  background-color: rgb(18, 18, 22);
+  background: linear-gradient(
+    45deg,
+    var(--state-card-back-start),
+    var(--state-card-back-end)
+  );
 
   @include mixin.respond(sm) {
     font-size: fct.px-to-rem(10);

@@ -1,3 +1,13 @@
+@use "../abstract/mixin" as mx;
+@use "../abstract/functions" as fct;
+
+.button {
+  &__entry {
+    background-color: var(--button-bg);
+    @include mx.flex-row();
+  }
+}
+
 .btn {
   padding: 8px 16px;
   border: none;
@@ -9,7 +19,7 @@
     &:hover {
       background-color: rgb(131, 131, 131);
     }
-    
+
     &:active {
       background-color: rgb(0, 0, 128);
     }

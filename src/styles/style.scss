@@ -2,35 +2,36 @@ body {
   height: 100vh;
 }
 
-.card {
-  height: 100px;
-  aspect-ratio: 1/1;
-  background-color: transparent;
-  border: none;
 
-  &__inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: all 300ms ease-in-out;
-  }
+// .card {
+//   height: 100px;
+//   aspect-ratio: 1/1;
+//   background-color: transparent;
+//   border: none;
 
-  &__face {
-    position: absolute;
-    inset: 0;
-    background-color: black;
-    backface-visibility: hidden;
+//   &__inner {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//     transform-style: preserve-3d;
+//     transition: all 300ms ease-in-out;
+//   }
 
-    &--back {
-      transform: rotateY(180deg);
-      background-color: red;
-    }
-  }
+//   &__face {
+//     position: absolute;
+//     inset: 0;
+//     background-color: black;
+//     backface-visibility: hidden;
 
-  &.is-flipped .card__inner {
-    transform: rotateY(180deg);
-  }
-}
+//     &--back {
+//       transform: rotateY(180deg);
+//       background-color: red;
+//     }
+//   }
+
+//   &.is-flipped .card__inner {
+//     transform: rotateY(180deg);
+//   }
+// }
 
 
