@@ -1,5 +1,6 @@
 import { renderRoute } from "../router";
-import "/src/styles/style.scss";
+// import "/src/styles/style.scss";
+import "/src/styles/main.scss";
 
 init();
 
