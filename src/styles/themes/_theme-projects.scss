@@ -1,0 +1,25 @@
+[data-theme="projects"] {
+  // Background
+  --bg-base: #ffffff;
+  --bg-surface: #f0f3f4;
+  --bg-dialog-field: #f0f6f9;
+
+  // Text
+  --text-primary: #;
+  --text-secondary: #;
+  --text-tertiary: #;
+  --text-player-blue: #;
+  --text-player-orange: #;
+
+  // Border
+  --border-default: #;
+
+  // Button
+  --btn-primary-bg: #;
+
+  // Game State
+  --state-player-blue: var(--text-player-blue);
+  --state-player-orange: var(--text-player-orange);
+  --state-card-back-start: var(--border-default);
+  --state-card-back-end: #;
+}

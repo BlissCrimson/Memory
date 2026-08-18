@@ -1,0 +1,25 @@
+[data-theme="food"] {
+  // Background
+  --bg-base: #ffffff;
+  --bg-surface: #f0e5d9;
+  --bg-dialog-field: #f6f6f6;
+
+  // Text
+  --text-primary: #;
+  --text-secondary: #;
+  --text-tertiary: #;
+  --text-player-blue: #;
+  --text-player-orange: #;
+
+  // Border
+  --border-default: #;
+
+  // Button
+  --btn-primary-bg: #;
+
+  // Game State
+  --state-player-blue: var(--text-player-blue);
+  --state-player-orange: var(--text-player-orange);
+  --state-card-back-start: var(--border-default);
+  --state-card-back-end: #;
+}

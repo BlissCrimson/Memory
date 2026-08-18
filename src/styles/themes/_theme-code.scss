@@ -1,10 +1,25 @@
-.theme-codeVibes {
-  --bg-surface: #303131;
-  --color-text: #303131;
-  --color-btn-primary: #415652;
-  --color-player-blue: #2BB1FF;
-  --color-player-orange: #F58E39;
-}
+[data-theme="code-vibes"] {
+  // Background
+  --bg-base: #303131;
+  --bg-surface: #415652;
+  --bg-dialog-field: #ffffff;
 
-// Gradient color card links unten #31685E und redht oben #4DD5BC
-// Farbe vom logo auf der card rückseite #6DD5C1
+  // Text
+  --text-primary: #ffffff;
+  --text-secondary: #303131;
+  --text-tertiary: #4dd5bc;
+  --text-player-blue: #2bb1ff;
+  --text-player-orange: #f58e39;
+
+  // Border
+  --border-default: #4dd5bc;
+
+  // Button
+  --btn-primary-bg: #415652;
+
+  // Game State
+  --state-player-blue: var(--text-player-blue);
+  --state-player-orange: var(--text-player-orange);
+  --state-card-back-start: var(--border-default);
+  --state-card-back-end: #31685e;
+}

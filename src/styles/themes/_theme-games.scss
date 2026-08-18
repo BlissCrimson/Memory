@@ -1,0 +1,27 @@
+[data-theme="games"] {
+  // Background
+  --bg-base: #294f60;
+  --bg-surface: #545d75;
+  --bg-dialog-field: #f0f6f9;
+
+  // Text
+  --text-primary: #1e7594;
+  --text-secondary: var(--bg-base);
+  --text-tertiary: #ffffff;
+  --text-player-blue: #097fc5;
+  --text-player-orange: #ea6900;
+
+  // Border
+  --border-default: #e71c4f;
+
+  // Button
+  --btn-primary-bg: #bfe5f2;
+  --btn-secondary-bg: #fd8d81;
+  --btn-tertiary-bg: var(--text-tertiary);
+
+  // Game State
+  --state-player-blue: var(--text-player-blue);
+  --state-player-orange: var(--text-player-orange);
+  --state-card-back-start: var(--text-primary);
+  --state-card-back-end: var(--state-card-back-start);
+}
