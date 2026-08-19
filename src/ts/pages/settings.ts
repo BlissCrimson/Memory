@@ -1,6 +1,13 @@
+import { createErrorPage } from "./404";
+
+/**
+ * Show the Settings page.
+ *
+ * @returns {void}
+ */
 export function createSettingsPage() {
   const settingsRef = document.querySelector("#app");
-  if (!settingsRef) return;
+  if (!settingsRef) return createErrorPage();
   settingsRef.innerHTML = `
     <section class="settings">
         <div class="settings__form">

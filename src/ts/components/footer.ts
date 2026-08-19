@@ -1,7 +1,9 @@
+import { createErrorPage } from "../pages/404";
+
 export function createFooter() {
-  let cardRef = document.querySelector("#footer)");
-  if (!cardRef) return;
-  cardRef.innerHTML = `
-        <a class="" href="imprint.html"></a>
+  let footerRef = document.querySelector("#imprint");
+  if (!footerRef) return createErrorPage();
+  footerRef.innerHTML = `
+        <a class="link" href="imprint.html">Impressum</a>
     `;
 }

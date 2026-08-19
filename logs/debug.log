@@ -1,0 +1,3 @@
+2026-08-19 - src/ts/pages/404.ts: createErrorPage() implementiert (vorher leer). Schreibt direkt in document.body statt #app, da diese Funktion auch als Fallback aufgerufen wird, wenn #app selbst fehlt (z.B. imprint.html). Erzeugt #app neu, damit nachfolgende Navigation weiter funktioniert. Design analog start.ts.
+2026-08-19 - src/styles/pages/_404.scss: neu angelegt, Styling der Error Page im Stil der Start-Seite (Red Rose Headline, Figtree Body, button__entry).
+2026-08-19 - src/styles/pages/_indexPages.scss: @forward "404" ergänzt.

@@ -1,9 +1,11 @@
 import { renderRoute } from "../router";
-// import "/src/styles/style.scss";
 import "/src/styles/main.scss";
 
 init();
 
+/**
+ * Start the router to changen pages.
+ */
 function init() {
   renderRoute(window.location.pathname);
   // const fieldRef = document.getElementById("field");

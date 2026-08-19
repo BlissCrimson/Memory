@@ -2,7 +2,9 @@ body {
   height: 100vh;
 }
 
-
+.link {
+  color: var(--text-start-muted);
+}
 // .card {
 //   height: 100px;
 //   aspect-ratio: 1/1;
@@ -33,5 +35,3 @@ body {
 //     transform: rotateY(180deg);
 //   }
 // }
-
-

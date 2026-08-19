@@ -1,6 +1,8 @@
+import { createErrorPage } from "../pages/404";
+
 export function createGameField(boardSize: 16 | 24 | 36 = 16) {
-  let fieldRef = document.querySelector("#app");
-  if (!fieldRef) return;
+  let fieldRef = document.querySelector("#gameField");
+  if (!fieldRef) return createErrorPage();
 
   const cards = Array.from(
     { length: boardSize },
