@@ -1,4 +1,4 @@
-import { createWelcomePage } from "./ts/pages/start";
+import { createHomePage } from "./ts/pages/home";
 import { createSettingsPage } from "./ts/pages/settings";
 import { createGamePage } from "./ts/pages/game";
 import { createErrorPage } from "./ts/pages/404";
@@ -6,7 +6,7 @@ import { createErrorPage } from "./ts/pages/404";
 type RouteHandler = (...params: string[]) => unknown;
 
 const routes: Record<string, RouteHandler> = {
-  "/": createWelcomePage,
+  "/": createHomePage,
   "/settings": createSettingsPage,
   "/game": createGamePage,
   "/404": createErrorPage,

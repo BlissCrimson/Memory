@@ -1,4 +1,12 @@
+import { navigate } from "../../router";
 import { createErrorPage } from "./404";
+
+const THEME_MAP: Record<string, string> = {
+  "code-vibes": "code",
+  gaming: "games",
+  "da-projects": "projects",
+  food: "food",
+};
 
 /**
  * Show the Settings page.
@@ -8,68 +16,156 @@ import { createErrorPage } from "./404";
 export function createSettingsPage() {
   const settingsRef = document.querySelector("#app");
   if (!settingsRef) return createErrorPage();
+  const BASE_URL = import.meta.env.BASE_URL;
+
+  const previewIcons: Record<string, string> = {
+    "code-vibes": `${BASE_URL}assets/img/cards/codeVibeTheme/logo__github.svg`,
+    gaming: `${BASE_URL}assets/img/cards/gameThemeCards/Front.svg`,
+    "da-projects": `${BASE_URL}assets/img/cards/DaProjectsTheme/pokeball.svg`,
+    food: `${BASE_URL}assets/img/cards/foodTheme/frond.svg`,
+  };
+
   settingsRef.innerHTML = `
     <section class="settings">
         <div class="settings__form">
-            <h1>Settings</h1>
+            <div class="settings__heading">
+                <h1>Settings</h1>
+                <img class="img img__entry img__entry--accent" src="${BASE_URL}assets/icons/line.svg" alt="">
+            </div>
 
             <fieldset class="settings__group">
-                <legend>Game themes</legend>
-                <label>
-                    <input type="radio" name="theme" value="code-vibes">
-                    Code vibes theme
+                <legend>
+                    <img class="img img__entry img__entry--legend" src="${BASE_URL}assets/icons/palette.svg" alt="">
+                    Game themes
+                </legend>
+                <label class="settings__option">
+                    <input type="radio" name="theme" value="code-vibes" checked>
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">Code vibes theme</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="theme" value="gaming">
-                    Gaming theme
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">Gaming theme</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="theme" value="da-projects">
-                    DA Projects theme
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">DA Projects theme</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="theme" value="food">
-                    Foods theme
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">Foods theme</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
 
             <fieldset class="settings__group">
-                <legend>Choose player</legend>
-                <label>
-                    <input type="radio" name="player" value="blue">
-                    Blue
+                <legend>
+                    <img class="img img__entry img__entry--legend" src="${BASE_URL}assets/icons/chess_pawn-settings.svg" alt="">
+                    Choose player
+                </legend>
+                <label class="settings__option">
+                    <input type="radio" name="player" value="blue" checked>
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">Blue</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="player" value="orange">
-                    Orange
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">Orange</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
 
             <fieldset class="settings__group">
                 <legend>Board size</legend>
-                <label>
-                    <input type="radio" name="boardSize" value="16">
-                    16 cards
+                <label class="settings__option">
+                    <input type="radio" name="boardSize" value="16" checked>
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">16 cards</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="boardSize" value="24">
-                    24 cards
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">24 cards</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
-                <label>
+                <label class="settings__option">
                     <input type="radio" name="boardSize" value="36">
-                    36 cards
+                    <span class="settings__radio"></span>
+                    <span class="settings__option-text">36 cards</span>
+                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
         </div>
 
-        <div class="settings__preview"></div>
+        <div class="settings__preview" data-theme="code">
+            <div class="settings__preview-bar">
+                <div class="settings__preview-counts">
+                    <span class="settings__preview-count settings__preview-count--blue">
+                        <img class="img img__entry" src="${BASE_URL}assets/icons/chess_pawn-blue.svg" alt="">
+                        0
+                    </span>
+                    <span class="settings__preview-count settings__preview-count--orange">
+                        <img class="img img__entry" src="${BASE_URL}assets/icons/chess_pawn-orange.svg" alt="">
+                        0
+                    </span>
+                </div>
+                <span class="settings__preview-current">
+                    Current player:
+                    <img class="img img__entry" data-current-player-icon src="${BASE_URL}assets/icons/player-blue.svg" alt="">
+                </span>
+                <button class="settings__preview-exit" type="button">
+                    <img class="img img__entry img__entry--exit" src="${BASE_URL}assets/icons/arrow.svg" alt="">
+                    Exit game
+                </button>
+            </div>
+            <div class="settings__preview-cards">
+                <div class="settings__preview-card settings__preview-card--back"></div>
+                <img class="settings__preview-card settings__preview-card--front" data-preview-icon src="${previewIcons["code-vibes"]}" alt="">
+            </div>
+        </div>
 
         <div class="settings__bar">
             <span>Game theme</span>
+            <img class="img img__entry img__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
             <span>Player</span>
+            <img class="img img__entry img__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
             <span>Board size</span>
-            <button class="button button__start">Start</button>
+            <button class="button button__start">
+                <img class="img img__entry img__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
+                Start
+            </button>
         </div>
     </section>
   `;
+
+  const previewRef = settingsRef.querySelector<HTMLElement>(".settings__preview");
+  const previewIconRef = settingsRef.querySelector<HTMLImageElement>("[data-preview-icon]");
+  const currentPlayerIconRef = settingsRef.querySelector<HTMLImageElement>("[data-current-player-icon]");
+
+  settingsRef.querySelectorAll<HTMLInputElement>('input[name="theme"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      previewRef?.setAttribute("data-theme", THEME_MAP[input.value]);
+      if (previewIconRef) previewIconRef.src = previewIcons[input.value];
+    });
+  });
+
+  settingsRef.querySelectorAll<HTMLInputElement>('input[name="player"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      if (!input.checked || !currentPlayerIconRef) return;
+      currentPlayerIconRef.src = `${BASE_URL}assets/icons/player-${input.value}.svg`;
+    });
+  });
+
+  const startButtonRef = settingsRef.querySelector(".button__start");
+  startButtonRef?.addEventListener("click", () => navigate("/game"));
 }
