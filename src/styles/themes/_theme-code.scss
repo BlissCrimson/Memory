@@ -1,4 +1,4 @@
-[data-theme="code-vibes"] {
+[data-theme="code"] {
   // Background
   --bg-base: #303131;
   --bg-surface: #415652;
@@ -15,11 +15,14 @@
   --border-default: #4dd5bc;
 
   // Button
-  --btn-primary-bg: #415652;
+  --btn-primary-bg: var(--bg-surface);
+  --btn-secondary-bg: #66cfbc;
+  --btn-tertiary-bg: #eefcf9;
 
   // Game State
   --state-player-blue: var(--text-player-blue);
   --state-player-orange: var(--text-player-orange);
   --state-card-back-start: var(--border-default);
   --state-card-back-end: #31685e;
+  --state-card-img: #6ed5c2;
 }

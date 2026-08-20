@@ -1,0 +1,9 @@
+@use "../abstract/functions" as fct;
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: fct.px-to-rem(1440);
+  margin-inline: auto;
+  overflow-x: hidden;
+}

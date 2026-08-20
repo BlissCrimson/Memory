@@ -71,17 +71,18 @@ body {
 
   &--big {
     position: absolute;
-    left: 0;
+    left: fct.px-to-rem(-40);
     bottom: 0;
     z-index: 0;
-    width: fct.px-to-rem(400);
+    width: fct.px-to-rem(520);
     height: auto;
     filter: brightness(0) invert(1);
     opacity: 0.06;
     pointer-events: none;
 
     @include mx.respond(sm) {
-      width: fct.px-to-rem(220);
+      left: fct.px-to-rem(-16);
+      width: fct.px-to-rem(180);
     }
   }
 }

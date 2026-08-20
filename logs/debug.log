@@ -1,3 +1,6 @@
 2026-08-19 - src/ts/pages/404.ts: createErrorPage() implementiert (vorher leer). Schreibt direkt in document.body statt #app, da diese Funktion auch als Fallback aufgerufen wird, wenn #app selbst fehlt (z.B. imprint.html). Erzeugt #app neu, damit nachfolgende Navigation weiter funktioniert. Design analog start.ts.
 2026-08-19 - src/styles/pages/_404.scss: neu angelegt, Styling der Error Page im Stil der Start-Seite (Red Rose Headline, Figtree Body, button__entry).
 2026-08-19 - src/styles/pages/_indexPages.scss: @forward "404" ergänzt.
+2026-08-19 - src/styles/layout/_indexLayout.scss: .container-Klasse ergänzt (max-width 1440px, margin-inline auto, overflow-x hidden), Datei existierte bereits leer, keine neue Datei angelegt.
+2026-08-19 - src/ts/pages/start.ts: Markup in <div class="container"> gewrappt, damit Content auf 1440px begrenzt ist während body-Hintergrund weiterhin volle Breite hat.
+2026-08-19 - src/styles/pages/_start.scss: .img__entry--big vergrößert (400px -> 520px, mobil 220px -> 180px) und mit negativem left-Offset positioniert, damit der Controller wie im Design-Mockup (docs/design/Memory/Home.jpg) am linken Rand angeschnitten wirkt statt komplett sichtbar in der Ecke zu liegen.

@@ -5,21 +5,20 @@
   --bg-dialog-field: #f0f6f9;
 
   // Text
-  --text-primary: #;
-  --text-secondary: #;
-  --text-tertiary: #;
-  --text-player-blue: #;
-  --text-player-orange: #;
-
-  // Border
-  --border-default: #;
+  --text-primary: #1e7594;
+  --text-secondary: #294f60;
+  --text-tertiary: #ffffff;
+  --text-player-blue: #097fc5;
+  --text-player-orange: #ea6900;
 
   // Button
-  --btn-primary-bg: #;
+  --btn-primary-bg: #bfe5f2;
+  --btn-secondary-bg: #fd8a81;
 
   // Game State
   --state-player-blue: var(--text-player-blue);
   --state-player-orange: var(--text-player-orange);
   --state-card-back-start: var(--border-default);
-  --state-card-back-end: #;
+  --state-card-back-end: var(--border-default);
+  --state-card-img: #4b91a9;
 }
