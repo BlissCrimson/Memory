@@ -24,7 +24,6 @@ body {
     font-family: "Red Rose", serif;
     font-weight: 700;
     font-size: fct.px-to-rem(72);
-    margin: 0;
 
     @include mx.respond(sm) {
       font-size: fct.px-to-rem(40);

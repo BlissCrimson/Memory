@@ -8,10 +8,10 @@
   align-items: flex-start;
   gap: fct.px-to-rem(48);
   min-height: 100vh;
-  padding: fct.px-to-rem(48);
+  padding: fct.px-to-rem(80) fct.px-to-rem(100);
   background-color: #ffffff;
   color: #1c1c1c;
-  font-family: "Figtree", sans-serif;
+  font-family: "Almarai", sans-serif;
 
   @include mx.respond(sm) {
     padding: fct.px-to-rem(16);
@@ -32,16 +32,9 @@
   gap: fct.px-to-rem(4);
 
   h1 {
-    margin: 0;
-    font-family: "Figtree", sans-serif;
+    font-family: "Red Rose", sans-serif;
     font-weight: 700;
-    font-size: fct.px-to-rem(48);
-  }
-
-  .img__entry--accent {
-    width: fct.px-to-rem(120);
-    height: auto;
-    transform: scaleX(-1);
+    font-size: fct.px-to-rem(54);
   }
 }
 
@@ -51,27 +44,22 @@
   gap: fct.px-to-rem(8);
   border: none;
   padding: 0;
-  margin: 0;
 
   legend {
     @include mx.flex-row();
     gap: fct.px-to-rem(8);
     margin-bottom: fct.px-to-rem(8);
     font-weight: 700;
-    font-size: fct.px-to-rem(22);
+    font-size: fct.px-to-rem(24);
   }
-}
-
-.img__entry--legend {
-  width: fct.px-to-rem(26);
-  height: fct.px-to-rem(26);
 }
 
 .settings__option {
   @include mx.flex-row();
   gap: fct.px-to-rem(12);
   cursor: pointer;
-  font-size: fct.px-to-rem(18);
+  font-size: fct.px-to-rem(20);
+  font-weight: 400;
 
   input[type="radio"] {
     position: absolute;
@@ -106,26 +94,8 @@
   }
 }
 
-.img__entry--connector {
-  width: fct.px-to-rem(34);
-  height: auto;
-  opacity: 0;
-
-  input:checked ~ & {
-    opacity: 1;
-  }
-}
-
 .settings__preview {
-  position: relative;
-  flex: 1 1 400px;
-  min-height: fct.px-to-rem(360);
-  display: flex;
-  flex-direction: column;
-  padding: fct.px-to-rem(24);
-  border-radius: fct.px-to-rem(24);
-  background-color: var(--bg-base);
-  transition: background-color 0.2s ease-in-out;
+  margin-top: fct.px-to-rem(150);
 
   &[data-theme="projects"] {
     background-color: var(--btn-primary-bg);
@@ -224,7 +194,11 @@
     width: fct.px-to-rem(180);
     height: fct.px-to-rem(180);
     border-radius: fct.px-to-rem(16);
-    background: linear-gradient(45deg, var(--state-card-back-start), var(--state-card-back-end));
+    background: linear-gradient(
+      45deg,
+      var(--state-card-back-start),
+      var(--state-card-back-end)
+    );
     transform: rotate(-8deg);
   }
 
@@ -239,13 +213,16 @@
 
 .settings__bar {
   @include mx.flex-row();
+  width: fct.px-to-rem(550);
+  height: fct.px-to-rem(80);
   flex-wrap: wrap;
   gap: fct.px-to-rem(16);
   flex-basis: 100%;
   padding: fct.px-to-rem(16) fct.px-to-rem(24);
   border-radius: fct.px-to-rem(8);
   background-color: #f5f5f5;
-  font-size: fct.px-to-rem(16);
+  font-size: fct.px-to-rem(20);
+  font-weight: 400;
 
   @include mx.respond(sm) {
     padding: fct.px-to-rem(12);
@@ -267,9 +244,9 @@
   border-radius: fct.px-to-rem(8);
   background-color: var(--button-bg);
   color: var(--text-button);
-  font-family: "Figtree", sans-serif;
+  font-family: "Red Rose", sans-serif;
   font-weight: 700;
-  font-size: fct.px-to-rem(16);
+  font-size: fct.px-to-rem(20);
   cursor: pointer;
   transition: filter 0.2s ease-in-out;
 

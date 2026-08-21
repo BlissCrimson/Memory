@@ -19,7 +19,7 @@ export function createSettingsPage() {
   const BASE_URL = import.meta.env.BASE_URL;
 
   const previewIcons: Record<string, string> = {
-    "code-vibes": `${BASE_URL}assets/img/cards/codeVibeTheme/logo__github.svg`,
+    "codes": `${BASE_URL}assets/img/cards/codeVibeTheme/logo__github.svg`,
     gaming: `${BASE_URL}assets/img/cards/gameThemeCards/Front.svg`,
     "da-projects": `${BASE_URL}assets/img/cards/DaProjectsTheme/pokeball.svg`,
     food: `${BASE_URL}assets/img/cards/foodTheme/frond.svg`,
@@ -30,7 +30,7 @@ export function createSettingsPage() {
         <div class="settings__form">
             <div class="settings__heading">
                 <h1>Settings</h1>
-                <img class="img img__entry img__entry--accent" src="${BASE_URL}assets/icons/line.svg" alt="">
+                <img class="icon__settings--headline" src="${BASE_URL}assets/icons/line-big.svg" alt="">
             </div>
 
             <fieldset class="settings__group">
@@ -39,7 +39,7 @@ export function createSettingsPage() {
                     Game themes
                 </legend>
                 <label class="settings__option">
-                    <input type="radio" name="theme" value="code-vibes" checked>
+                    <input type="radio" name="theme" value="codes" checked>
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Code vibes theme</span>
                     <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
@@ -107,30 +107,7 @@ export function createSettingsPage() {
         </div>
 
         <div class="settings__preview" data-theme="code">
-            <div class="settings__preview-bar">
-                <div class="settings__preview-counts">
-                    <span class="settings__preview-count settings__preview-count--blue">
-                        <img class="img img__entry" src="${BASE_URL}assets/icons/chess_pawn-blue.svg" alt="">
-                        0
-                    </span>
-                    <span class="settings__preview-count settings__preview-count--orange">
-                        <img class="img img__entry" src="${BASE_URL}assets/icons/chess_pawn-orange.svg" alt="">
-                        0
-                    </span>
-                </div>
-                <span class="settings__preview-current">
-                    Current player:
-                    <img class="img img__entry" data-current-player-icon src="${BASE_URL}assets/icons/player-blue.svg" alt="">
-                </span>
-                <button class="settings__preview-exit" type="button">
-                    <img class="img img__entry img__entry--exit" src="${BASE_URL}assets/icons/arrow.svg" alt="">
-                    Exit game
-                </button>
-            </div>
-            <div class="settings__preview-cards">
-                <div class="settings__preview-card settings__preview-card--back"></div>
-                <img class="settings__preview-card settings__preview-card--front" data-preview-icon src="${previewIcons["code-vibes"]}" alt="">
-            </div>
+            <img class="img__preview" src="${BASE_URL}public/assets/img/themes/theme-codelogos.svg" alt="">            
         </div>
 
         <div class="settings__bar">

@@ -3,7 +3,6 @@
 
 body {
   background-color: var(--bg__start);
-  margin: 0;
 }
 
 .welcome {
@@ -35,7 +34,6 @@ body {
     font-family: "Red Rose", serif;
     font-weight: 700;
     font-size: fct.px-to-rem(140);
-    margin: 0;
 
     @include mx.respond(sm) {
       font-size: fct.px-to-rem(78);
@@ -63,40 +61,6 @@ body {
 
   &:hover {
     filter: brightness(0.95);
-  }
-
-  p {
-    margin: 0;
-  }
-}
-
-.img__entry {
-  &--button {
-    width: fct.px-to-rem(44);
-    height: auto;
-  }
-
-  &--arrow {
-    width: fct.px-to-rem(40);
-    height: auto;
-  }
-
-  &--big {
-    position: absolute;
-    left: fct.px-to-rem(-40);
-    bottom: 0;
-    z-index: 0;
-    width: fct.px-to-rem(520);
-    height: auto;
-    filter: brightness(0) invert(1);
-    opacity: 0.06;
-    pointer-events: none;
-    transform: rotate(45deg);
-
-    @include mx.respond(sm) {
-      left: fct.px-to-rem(-16);
-      width: fct.px-to-rem(180);
-    }
   }
 }
 
