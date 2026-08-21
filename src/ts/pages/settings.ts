@@ -51,7 +51,7 @@ export function createSettingsPage() {
                     Game themes
                 </legend>
                 <label class="settings__option">
-                    <input type="radio" name="theme" value="codes" checked>
+                    <input type="radio" name="theme" value="codes">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Code vibes theme</span>
                     <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
@@ -82,7 +82,7 @@ export function createSettingsPage() {
                     Choose player
                 </legend>
                 <label class="settings__option">
-                    <input type="radio" name="player" value="blue" checked>
+                    <input type="radio" name="player" value="blue">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Blue</span>
                     <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
@@ -98,7 +98,7 @@ export function createSettingsPage() {
             <fieldset class="settings__group">
                 <legend>Board size</legend>
                 <label class="settings__option">
-                    <input type="radio" name="boardSize" value="16" checked>
+                    <input type="radio" name="boardSize" value="16">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">16 cards</span>
                     <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
@@ -123,12 +123,12 @@ export function createSettingsPage() {
         </div>
 
         <div class="settings__bar">
-            <span data-bar-theme>${THEME_LABELS["codes"]} Theme</span>
+            <span data-bar-theme>No theme selected</span>
             <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-            <span data-bar-player>${PLAYER_LABELS["blue"]} Player</span>
+            <span data-bar-player>No player selected</span>
             <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-            <span data-bar-board-size>Board-16 Cards</span>
-            <button class="button button__start">
+            <span data-bar-board-size>No board size selected</span>
+            <button class="button button__start" disabled>
                 <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
                 Start
             </button>
@@ -150,16 +150,45 @@ export function createSettingsPage() {
   const barBoardSizeRef = settingsRef.querySelector<HTMLElement>(
     "[data-bar-board-size]",
   );
+  const startButtonRef =
+    settingsRef.querySelector<HTMLButtonElement>(".button__start");
+
+  let selectedTheme: string | null = null;
+  let selectedPlayer: string | null = null;
+  let selectedBoardSize: string | null = null;
+
+  function applyPreview(themeValue: string) {
+    previewRef?.setAttribute("data-theme", THEME_MAP[themeValue]);
+    if (previewIconRef) previewIconRef.src = previewImgs[themeValue];
+  }
+
+  function updateStartButtonState() {
+    if (!startButtonRef) return;
+    startButtonRef.disabled = !(
+      selectedTheme &&
+      selectedPlayer &&
+      selectedBoardSize
+    );
+  }
 
   settingsRef
     .querySelectorAll<HTMLInputElement>('input[name="theme"]')
     .forEach((input) => {
       input.addEventListener("change", () => {
         if (!input.checked) return;
-        previewRef?.setAttribute("data-theme", THEME_MAP[input.value]);
-        if (previewIconRef) previewIconRef.src = previewImgs[input.value];
+        selectedTheme = input.value;
+        applyPreview(input.value);
         if (barThemeRef)
           barThemeRef.textContent = `${THEME_LABELS[input.value]} Theme`;
+        updateStartButtonState();
+      });
+
+      const optionRef = input.closest<HTMLElement>(".settings__option");
+      optionRef?.addEventListener("mouseenter", () => {
+        applyPreview(input.value);
+      });
+      optionRef?.addEventListener("mouseleave", () => {
+        applyPreview(selectedTheme ?? "codes");
       });
     });
 
@@ -168,8 +197,10 @@ export function createSettingsPage() {
     .forEach((input) => {
       input.addEventListener("change", () => {
         if (!input.checked) return;
+        selectedPlayer = input.value;
         if (barPlayerRef)
           barPlayerRef.textContent = `${PLAYER_LABELS[input.value]} Player`;
+        updateStartButtonState();
       });
     });
 
@@ -178,11 +209,12 @@ export function createSettingsPage() {
     .forEach((input) => {
       input.addEventListener("change", () => {
         if (!input.checked) return;
+        selectedBoardSize = input.value;
         if (barBoardSizeRef)
           barBoardSizeRef.textContent = `Board-${input.value} Cards`;
+        updateStartButtonState();
       });
     });
 
-  const startButtonRef = settingsRef.querySelector(".button__start");
   startButtonRef?.addEventListener("click", () => navigate("/game"));
 }
