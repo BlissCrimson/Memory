@@ -1,5 +1,11 @@
 import { createErrorPage } from "../pages/404";
 
+/**
+ * Create the memory field on selected boardsize.
+ *
+ * @param boardSize
+ * @returns {void}
+ */
 export function createGameField(boardSize: 16 | 24 | 36 = 16) {
   let fieldRef = document.querySelector("#gameField");
   if (!fieldRef) return createErrorPage();
