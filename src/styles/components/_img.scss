@@ -5,13 +5,11 @@
   width: fct.px-to-rem(250);
 }
 
-.img__entry {
-  &--accent {
-    width: fct.px-to-rem(120);
-    height: auto;
-    transform: scaleX(-1);
-  }
+.icon {
+  display: block;
+}
 
+.icon__entry {
   &--arrow {
     width: fct.px-to-rem(40);
     height: auto;
@@ -54,4 +52,24 @@
     width: fct.px-to-rem(26);
     height: fct.px-to-rem(26);
   }
+
+  &--slash {
+    width: fct.px-to-rem(16);
+    height: auto;
+  }
+
+  &--start {
+    width: fct.px-to-rem(16);
+    height: auto;
+  }
+}
+
+.img {
+  display: block;
+}
+
+.img__preview {
+  width: 100%;
+  max-width: fct.px-to-rem(320);
+  height: auto;
 }

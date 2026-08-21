@@ -18,11 +18,11 @@ export function createErrorPage() {
           <h1>404</h1>
           <span>This page does not exist.</span>
           <button class="button button__entry">
-              <img class="img img__entry img__entry--button" src="${BASE_URL}assets/icons/arrow.svg" alt="arrow">
+              <img class="icon icon__entry icon__entry--button" src="${BASE_URL}assets/icons/arrow.svg" alt="arrow">
               <p>Back to start</p>
           </button>
       </section>
-      <img class="img img__entry img__entry--big" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="controller">
+      <img class="icon icon__entry icon__entry--big" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="controller">
     </div>
   `;
   const backButtonRef = document.querySelector(".error .button__entry");

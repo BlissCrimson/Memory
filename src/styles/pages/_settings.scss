@@ -106,108 +106,14 @@
   }
 }
 
-.settings__preview-bar {
-  @include mx.flex-row();
-  justify-content: space-between;
-  gap: fct.px-to-rem(12);
-  flex-wrap: wrap;
-  padding: fct.px-to-rem(8) fct.px-to-rem(12);
-  border-radius: fct.px-to-rem(8);
-  background-color: rgb(0 0 0 / 15%);
-  color: var(--text-tertiary);
-  font-size: fct.px-to-rem(14);
-
-  [data-theme="projects"] &,
-  [data-theme="food"] & {
-    background-color: rgb(255 255 255 / 55%);
-    color: #1c1c1c;
-  }
-}
-
-.settings__preview-counts {
-  @include mx.flex-row();
-  gap: fct.px-to-rem(12);
-}
-
-.settings__preview-count {
-  @include mx.flex-row();
-  gap: fct.px-to-rem(4);
-  font-weight: 700;
-
-  img {
-    width: fct.px-to-rem(14);
-    height: auto;
-  }
-
-  &--blue {
-    color: var(--text-player-blue);
-  }
-
-  &--orange {
-    color: var(--text-player-orange);
-  }
-}
-
 .settings__preview-current {
   @include mx.flex-row();
   gap: fct.px-to-rem(8);
+  margin-top: fct.px-to-rem(12);
 
   img {
     width: fct.px-to-rem(16);
     height: auto;
-  }
-}
-
-.settings__preview-exit {
-  @include mx.flex-row();
-  gap: fct.px-to-rem(6);
-  padding: fct.px-to-rem(6) fct.px-to-rem(12);
-  border: 1px solid var(--border-default, currentcolor);
-  border-radius: fct.px-to-rem(6);
-  background: transparent;
-  color: inherit;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: fct.px-to-rem(13);
-  cursor: pointer;
-
-  img {
-    width: fct.px-to-rem(14);
-    height: auto;
-    transform: scaleX(-1);
-  }
-}
-
-.settings__preview-cards {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  margin-top: fct.px-to-rem(24);
-}
-
-.settings__preview-card {
-  position: absolute;
-
-  &--back {
-    width: fct.px-to-rem(180);
-    height: fct.px-to-rem(180);
-    border-radius: fct.px-to-rem(16);
-    background: linear-gradient(
-      45deg,
-      var(--state-card-back-start),
-      var(--state-card-back-end)
-    );
-    transform: rotate(-8deg);
-  }
-
-  &--front {
-    width: fct.px-to-rem(150);
-    height: auto;
-    border-radius: fct.px-to-rem(16);
-    box-shadow: 0 fct.px-to-rem(8) fct.px-to-rem(20) rgb(0 0 0 / 25%);
-    transform: rotate(8deg) translate(fct.px-to-rem(30), fct.px-to-rem(10));
   }
 }
 
@@ -228,11 +134,6 @@
     padding: fct.px-to-rem(12);
     gap: fct.px-to-rem(8);
   }
-
-  .img__entry--slash {
-    width: fct.px-to-rem(16);
-    height: auto;
-  }
 }
 
 .button__start {
@@ -252,10 +153,5 @@
 
   &:hover {
     filter: brightness(0.95);
-  }
-
-  .img__entry--start {
-    width: fct.px-to-rem(16);
-    height: auto;
   }
 }

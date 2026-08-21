@@ -2,7 +2,7 @@ import { navigate } from "../../router";
 import { createErrorPage } from "./404";
 
 const THEME_MAP: Record<string, string> = {
-  "code-vibes": "code",
+  codes: "code",
   gaming: "games",
   "da-projects": "projects",
   food: "food",
@@ -35,51 +35,51 @@ export function createSettingsPage() {
 
             <fieldset class="settings__group">
                 <legend>
-                    <img class="img img__entry img__entry--legend" src="${BASE_URL}assets/icons/palette.svg" alt="">
+                    <img class="icon icon__entry icon__entry--legend" src="${BASE_URL}assets/icons/palette.svg" alt="">
                     Game themes
                 </legend>
                 <label class="settings__option">
                     <input type="radio" name="theme" value="codes" checked>
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Code vibes theme</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="theme" value="gaming">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Gaming theme</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="theme" value="da-projects">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">DA Projects theme</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="theme" value="food">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Foods theme</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
 
             <fieldset class="settings__group">
                 <legend>
-                    <img class="img img__entry img__entry--legend" src="${BASE_URL}assets/icons/chess_pawn-settings.svg" alt="">
+                    <img class="icon icon__entry icon__entry--legend" src="${BASE_URL}assets/icons/chess_pawn-settings.svg" alt="">
                     Choose player
                 </legend>
                 <label class="settings__option">
                     <input type="radio" name="player" value="blue" checked>
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Blue</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="player" value="orange">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">Orange</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
 
@@ -89,35 +89,39 @@ export function createSettingsPage() {
                     <input type="radio" name="boardSize" value="16" checked>
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">16 cards</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="boardSize" value="24">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">24 cards</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
                 <label class="settings__option">
                     <input type="radio" name="boardSize" value="36">
                     <span class="settings__radio"></span>
                     <span class="settings__option-text">36 cards</span>
-                    <img class="img img__entry img__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
+                    <img class="icon icon__entry icon__entry--connector" src="${BASE_URL}assets/icons/line.svg" alt="">
                 </label>
             </fieldset>
         </div>
 
         <div class="settings__preview" data-theme="code">
-            <img class="img__preview" src="${BASE_URL}public/assets/img/themes/theme-codelogos.svg" alt="">            
+            <img class="img img__preview" data-preview-icon src="${previewIcons["codes"]}" alt="">
+            <span class="settings__preview-current">
+                Current player:
+                <img class="icon icon__entry" data-current-player-icon src="${BASE_URL}assets/icons/player-blue.svg" alt="">
+            </span>
         </div>
 
         <div class="settings__bar">
             <span>Game theme</span>
-            <img class="img img__entry img__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+            <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
             <span>Player</span>
-            <img class="img img__entry img__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+            <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
             <span>Board size</span>
             <button class="button button__start">
-                <img class="img img__entry img__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
+                <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
                 Start
             </button>
         </div>
