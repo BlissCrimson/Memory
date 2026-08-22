@@ -1,0 +1,43 @@
+@use "../abstract/mixin" as mx;
+@use "../abstract/functions" as fct;
+
+.result {
+  @include mx.flex-center();
+  gap: fct.px-to-rem(24);
+  min-height: 100vh;
+  background-color: var(--bg__start);
+  color: var(--text-start);
+  font-family: "Figtree", sans-serif;
+  text-align: center;
+
+  h1 {
+    font-family: "Red Rose", serif;
+    font-weight: 700;
+    font-size: fct.px-to-rem(48);
+
+    @include mx.respond(sm) {
+      font-size: fct.px-to-rem(32);
+    }
+  }
+}
+
+.result__score {
+  @include mx.flex-row();
+  gap: fct.px-to-rem(24);
+  padding: fct.px-to-rem(12) fct.px-to-rem(24);
+  border-radius: fct.px-to-rem(8);
+  background-color: #ffffff;
+  color: #1c1c1c;
+  font-size: fct.px-to-rem(24);
+  font-weight: 700;
+
+  span {
+    @include mx.flex-row();
+    gap: fct.px-to-rem(8);
+  }
+
+  img {
+    width: fct.px-to-rem(24);
+    height: auto;
+  }
+}

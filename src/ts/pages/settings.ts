@@ -216,5 +216,11 @@ export function createSettingsPage() {
       });
     });
 
-  startButtonRef?.addEventListener("click", () => navigate("/game"));
+  startButtonRef?.addEventListener("click", () => {
+    if (!selectedTheme || !selectedPlayer || !selectedBoardSize) return;
+    sessionStorage.setItem("memory:theme", selectedTheme);
+    sessionStorage.setItem("memory:player", selectedPlayer);
+    sessionStorage.setItem("memory:boardSize", selectedBoardSize);
+    navigate("/game");
+  });
 }
