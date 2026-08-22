@@ -22,6 +22,26 @@
   }
 }
 
+[data-theme="code"] .card {
+  width: fct.px-to-rem(120);
+  height: fct.px-to-rem(120);
+}
+
+[data-theme="games"] .card {
+  width: fct.px-to-rem(105);
+  height: fct.px-to-rem(120);
+}
+
+[data-theme="projects"] .card {
+  width: fct.px-to-rem(120);
+  height: fct.px-to-rem(100);
+}
+
+[data-theme="food"] .card {
+  width: fct.px-to-rem(122);
+  height: fct.px-to-rem(120);
+}
+
 .card__inner {
   position: relative;
   width: 100%;

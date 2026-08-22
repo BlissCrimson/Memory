@@ -1,11 +1,8 @@
 @use "../abstract/mixin" as mx;
 @use "../abstract/functions" as fct;
 
-$card-width: fct.px-to-rem(140);
-$card-width--sm: fct.px-to-rem(70);
-$card-width--md: fct.px-to-rem(100);
 $gap: fct.px-to-rem(16);
-$gap--sm: fct.px-to-rem(8);
+$gap--tight: fct.px-to-rem(8);
 
 .field {
   display: grid;
@@ -15,45 +12,33 @@ $gap--sm: fct.px-to-rem(8);
   padding: fct.px-to-rem(32);
 
   @include mx.respond(md, sm) {
-    gap: $gap--sm;
     padding: fct.px-to-rem(16);
   }
 
   @include mx.respond(sm) {
-    gap: $gap--sm;
     padding: fct.px-to-rem(16);
   }
 
   &--16 {
-    grid-template-columns: repeat(4, #{$card-width});
-
-    @include mx.respond(md, sm) {
-      grid-template-columns: repeat(4, #{$card-width--md});
-    }
-
-    @include mx.respond(sm) {
-      grid-template-columns: repeat(4, #{$card-width--sm});
-    }
+    grid-template-columns: repeat(4, max-content);
   }
 
   &--24,
   &--36 {
-    grid-template-columns: repeat(6, #{$card-width});
-
-    @include mx.respond(md, sm) {
-      grid-template-columns: repeat(6, #{$card-width--md});
-    }
-
-    @include mx.respond(sm) {
-      grid-template-columns: repeat(6, #{$card-width--sm});
-    }
+    grid-template-columns: repeat(6, max-content);
   }
+}
+
+[data-theme="projects"] .field--24,
+[data-theme="projects"] .field--36,
+[data-theme="food"] .field--24,
+[data-theme="food"] .field--36 {
+  gap: $gap--tight;
 }
 
 .game {
   min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: fct.px-to-rem(32);
   background-color: var(--bg-base);
 }
 
