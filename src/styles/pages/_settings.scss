@@ -2,7 +2,6 @@
 @use "../abstract/functions" as fct;
 
 .settings {
-  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -16,6 +15,10 @@
   @include mx.respond(sm) {
     padding: fct.px-to-rem(16);
     gap: fct.px-to-rem(24);
+  }
+
+  @include mx.respond-min(xl) {
+    justify-content: center;
   }
 }
 
@@ -56,6 +59,7 @@
 
 .settings__option {
   @include mx.flex-row();
+  margin-left: fct.px-to-rem(34);
   gap: fct.px-to-rem(12);
   cursor: pointer;
   font-size: fct.px-to-rem(20);
@@ -96,6 +100,13 @@
   }
 }
 
+.settings__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: fct.px-to-rem(24);
+}
+
 .settings__preview {
   margin-top: fct.px-to-rem(150);
 
@@ -121,18 +132,28 @@
 
 .settings__bar {
   @include mx.flex-row();
-  width: fct.px-to-rem(550);
+  width: fct.px-to-rem(580);
   height: fct.px-to-rem(80);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: fct.px-to-rem(16);
-  flex-basis: 100%;
   padding: fct.px-to-rem(16) fct.px-to-rem(24);
   border-radius: fct.px-to-rem(8);
   background-color: #f5f5f5;
-  font-size: fct.px-to-rem(20);
+  font-size: fct.px-to-rem(16);
   font-weight: 400;
 
+  [data-bar-theme],
+  [data-bar-player],
+  [data-bar-board-size] {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   @include mx.respond(sm) {
+    max-width: 100%;
     padding: fct.px-to-rem(12);
     gap: fct.px-to-rem(8);
   }

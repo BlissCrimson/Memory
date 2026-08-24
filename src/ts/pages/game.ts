@@ -21,6 +21,7 @@ export function createGamePage() {
   const BASE_URL = import.meta.env.BASE_URL;
 
   const themeValue = sessionStorage.getItem("memory:theme") ?? "codes";
+  const theme = THEME_MAP[themeValue] ?? "code";
   const startPlayer =
     (sessionStorage.getItem("memory:player") as Player | null) ?? "blue";
   const boardSize = Number(
@@ -28,7 +29,7 @@ export function createGamePage() {
   ) as 16 | 24 | 36;
 
   gameRef.innerHTML = `
-    <div class="game" data-theme="${THEME_MAP[themeValue] ?? "code"}">
+    <div class="game" data-theme="${theme}">
         <header class="game__bar">
             <div class="game__scores">
                 <span class="game__score game__score--blue">
@@ -42,11 +43,19 @@ export function createGamePage() {
             </div>
             <p class="game__current">
                 Current player:
-                <img data-current-player-icon src="${BASE_URL}assets/icons/chess_pawn-${startPlayer}.svg" alt="${startPlayer}">
+                <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
             </p>
             <button class="button game__exit" data-exit>Exit game</button>
         </header>
         <div id="gameField"></div>
+
+        <dialog class="game__exit-dialog" data-exit-dialog>
+            <p class="game__exit-dialog-text">Are you sure you want to exit the game?</p>
+            <div class="game__exit-dialog-actions">
+                <button class="game__exit-dialog-cancel" data-exit-cancel>Back to game</button>
+                <button class="game__exit-dialog-confirm" data-exit-confirm>Exit game</button>
+            </div>
+        </dialog>
     </div>
   `;
 
@@ -65,14 +74,39 @@ export function createGamePage() {
   );
   const exitButtonRef =
     gameRef.querySelector<HTMLButtonElement>("[data-exit]");
+  const exitDialogRef =
+    gameRef.querySelector<HTMLDialogElement>("[data-exit-dialog]");
+  const exitCancelRef = gameRef.querySelector<HTMLButtonElement>(
+    "[data-exit-cancel]",
+  );
+  const exitConfirmRef = gameRef.querySelector<HTMLButtonElement>(
+    "[data-exit-confirm]",
+  );
 
   function updateCurrentPlayerIcon() {
     if (!currentPlayerIconRef) return;
-    currentPlayerIconRef.src = `${BASE_URL}assets/icons/chess_pawn-${currentPlayer}.svg`;
     currentPlayerIconRef.alt = currentPlayer;
+    currentPlayerIconRef.classList.remove(
+      "game__current-icon--blue",
+      "game__current-icon--orange",
+    );
+
+    if (theme === "code") {
+      currentPlayerIconRef.src = `${BASE_URL}assets/icons/player-${currentPlayer}.svg`;
+    } else {
+      currentPlayerIconRef.src = `${BASE_URL}assets/icons/chess_pawn-white.svg`;
+      currentPlayerIconRef.classList.add(`game__current-icon--${currentPlayer}`);
+    }
   }
 
-  exitButtonRef?.addEventListener("click", () => navigate("/"));
+  updateCurrentPlayerIcon();
+
+  exitButtonRef?.addEventListener("click", () => exitDialogRef?.showModal());
+  exitCancelRef?.addEventListener("click", () => exitDialogRef?.close());
+  exitConfirmRef?.addEventListener("click", () => navigate("/settings"));
+  exitDialogRef?.addEventListener("click", (event) => {
+    if (event.target === exitDialogRef) exitDialogRef.close();
+  });
 
   createGameField(boardSize, themeValue, {
     onMatch: () => {

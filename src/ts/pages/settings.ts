@@ -31,10 +31,10 @@ export function createSettingsPage() {
   const BASE_URL = import.meta.env.BASE_URL;
 
   const previewImgs: Record<string, string> = {
-    codes: `${BASE_URL}assets/img/themes/theme-codelogos.svg`,
-    gaming: `${BASE_URL}assets/img/themes/theme-game.svg`,
-    "da-projects": `${BASE_URL}assets/img/themes/theme-projects.svg`,
-    food: `${BASE_URL}assets/img/themes/theme-foods.svg`,
+    codes: `${BASE_URL}assets/img/codeTheme/theme-codelogos.svg`,
+    gaming: `${BASE_URL}assets/img/gamingTheme/theme-game.svg`,
+    "da-projects": `${BASE_URL}assets/img/projectsTheme/theme-projects.svg`,
+    food: `${BASE_URL}assets/img/foodTheme/theme-foods.svg`,
   };
 
   settingsRef.innerHTML = `
@@ -96,7 +96,10 @@ export function createSettingsPage() {
             </fieldset>
 
             <fieldset class="settings__group">
-                <legend>Board size</legend>
+                <legend>
+                    <img class="icon icon__entry icon__entry--legend" src="${BASE_URL}assets/icons/board-size.svg" alt="">
+                    Board size
+                </legend>
                 <label class="settings__option">
                     <input type="radio" name="boardSize" value="16">
                     <span class="settings__radio"></span>
@@ -118,20 +121,22 @@ export function createSettingsPage() {
             </fieldset>
         </div>
 
-        <div class="settings__preview" data-theme="code">
-            <img class="img img__preview" data-preview-icon src="${previewImgs["codes"]}" alt="">            
-        </div>
+        <div class="settings__right">
+            <div class="settings__preview" data-theme="code">
+                <img class="img img__preview" data-preview-icon src="${previewImgs["codes"]}" alt="">
+            </div>
 
-        <div class="settings__bar">
-            <span data-bar-theme>No theme selected</span>
-            <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-            <span data-bar-player>No player selected</span>
-            <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-            <span data-bar-board-size>No board size selected</span>
-            <button class="button button__start" disabled>
-                <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
-                Start
-            </button>
+            <div class="settings__bar">
+                <span data-bar-theme>GameTheme</span>
+                <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                <span data-bar-player>Player</span>
+                <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                <span data-bar-board-size>Board-Size</span>
+                <button class="button button__start" disabled>
+                    <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
+                    Start
+                </button>
+            </div>
         </div>
     </section>
   `;

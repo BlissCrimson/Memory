@@ -3,41 +3,227 @@
 
 .result {
   @include mx.flex-center();
+  position: relative;
+  overflow: hidden;
   gap: fct.px-to-rem(24);
   min-height: 100vh;
-  background-color: var(--bg__start);
-  color: var(--text-start);
+  background-color: var(--result-bg);
+  color: var(--text-tertiary);
   font-family: "Figtree", sans-serif;
   text-align: center;
+}
 
-  h1 {
-    font-family: "Red Rose", serif;
-    font-weight: 700;
-    font-size: fct.px-to-rem(48);
+.result__confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fct.px-to-rem(120);
+  background-image: url("../../../public/assets/img/confetti.svg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-    @include mx.respond(sm) {
-      font-size: fct.px-to-rem(32);
-    }
+  @include mx.respond(sm) {
+    height: fct.px-to-rem(72);
+  }
+
+  @include mx.respond-min(xl) {
+    background-image: url("../../../public/assets/img/confetti__widescreen.svg");
+  }
+}
+
+.result__headline {
+  @include mx.flex-center();
+  z-index: 1;
+  gap: fct.px-to-rem(12);
+}
+
+.result__icon-panel {
+  @include mx.flex-center();
+  margin-top: fct.px-to-rem(12);
+}
+
+.result__icon {
+  height: fct.px-to-rem(140);
+  width: auto;
+
+  @include mx.respond(sm) {
+    height: fct.px-to-rem(96);
+  }
+}
+
+.result__lead {
+  font-size: fct.px-to-rem(20);
+  font-weight: 400;
+}
+
+.result__title {
+  font-size: fct.px-to-rem(56);
+  font-weight: 700;
+
+  @include mx.respond(sm) {
+    font-size: fct.px-to-rem(36);
+  }
+}
+
+.result__title-img {
+  height: fct.px-to-rem(72);
+  width: auto;
+
+  @include mx.respond(sm) {
+    height: fct.px-to-rem(48);
   }
 }
 
 .result__score {
   @include mx.flex-row();
+  z-index: 1;
   gap: fct.px-to-rem(24);
   padding: fct.px-to-rem(12) fct.px-to-rem(24);
   border-radius: fct.px-to-rem(8);
-  background-color: #ffffff;
+  background-color: var(--bg-dialog-field);
   color: #1c1c1c;
   font-size: fct.px-to-rem(24);
   font-weight: 700;
+}
 
-  span {
-    @include mx.flex-row();
-    gap: fct.px-to-rem(8);
-  }
+.result__score-item {
+  @include mx.flex-row();
+  gap: fct.px-to-rem(8);
 
   img {
     width: fct.px-to-rem(24);
     height: auto;
+  }
+
+  &--blue {
+    color: var(--text-player-blue);
+  }
+
+  &--orange {
+    color: var(--text-player-orange);
+  }
+}
+
+.result__button {
+  z-index: 1;
+  padding: fct.px-to-rem(12) fct.px-to-rem(24);
+  border: 2px solid transparent;
+  border-radius: fct.px-to-rem(8);
+  font-family: "Red Rose", sans-serif;
+  font-weight: 700;
+  font-size: fct.px-to-rem(16);
+  cursor: pointer;
+  transition: filter 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+// --- Code theme -------------------------------------------------------
+
+.result[data-theme="code"] {
+  .result__lead {
+    color: var(--text-primary);
+  }
+
+  .result__title--winner {
+    font-family: "Red Rose", sans-serif;
+    text-transform: uppercase;
+
+    &.result__title--blue {
+      color: var(--text-player-blue);
+    }
+
+    &.result__title--orange {
+      color: var(--text-player-orange);
+    }
+  }
+
+  .result__button {
+    background-color: var(--bg-surface);
+    border-color: var(--border-default);
+    color: var(--border-default);
+  }
+}
+
+// --- Games theme --------------------------------------------------------
+
+.result[data-theme="games"] {
+  .result__lead {
+    color: var(--text-tertiary);
+  }
+
+  .result__title--winner {
+    font-family: "Orbitron", sans-serif;
+
+    &.result__title--blue {
+      color: var(--text-player-blue);
+    }
+
+    &.result__title--orange {
+      color: var(--text-player-orange);
+    }
+  }
+
+  .result__title--draw {
+    font-family: "Orbitron", sans-serif;
+    color: var(--border-default);
+  }
+
+  .result__button {
+    background-color: var(--bg-surface);
+    border-color: var(--border-default);
+    color: var(--border-default);
+  }
+}
+
+// --- Projects theme -------------------------------------------------------
+
+.result[data-theme="projects"] {
+  .result__lead {
+    color: var(--text-tertiary);
+  }
+
+  .result__title--winner {
+    font-family: "Figtree", sans-serif;
+    color: var(--text-tertiary);
+  }
+
+  .result__button {
+    background-color: var(--btn-primary-bg);
+    color: var(--text-primary);
+  }
+}
+
+// --- Food theme -------------------------------------------------------
+
+.result[data-theme="food"] {
+  .result__icon-panel {
+    padding: fct.px-to-rem(24);
+    border-radius: fct.px-to-rem(4);
+    background-color: var(--bg-surface);
+  }
+
+  .result__lead {
+    color: var(--text-secondary);
+    font-family: "Klee One", cursive;
+  }
+
+  .result__title--winner {
+    font-family: "Klee One", cursive;
+    color: var(--text-primary);
+  }
+
+  .result__title--draw {
+    font-family: "Klee One", cursive;
+    color: var(--text-secondary);
+  }
+
+  .result__button {
+    background-color: var(--btn-primary-bg);
+    color: var(--text-tertiary);
   }
 }
