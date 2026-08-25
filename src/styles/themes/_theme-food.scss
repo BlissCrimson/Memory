@@ -24,4 +24,10 @@
   --state-card-back-start: var(--text-secondary);
   --state-card-back-end: var(--text-secondary);
   --state-card-img: #f59c57;
+
+  // fonts
+  --font-first: "Klee One";
+  --font-buttons: "Delicius Unicase";
+  --font-counter: var(var(--font-buttons));
+  --font-counter-gameOver: "Red Rose";
 }
