@@ -133,6 +133,9 @@ $gap--tight: fct.px-to-rem(8);
   }
 
   &__exit-dialog {
+    // Restores the browser's native auto-centering for <dialog>, which the
+    // global `* { margin: 0; }` reset (style.scss) otherwise overrides.
+    margin: auto;
     flex-direction: column;
     align-items: center;
     gap: fct.px-to-rem(24);
@@ -140,7 +143,10 @@ $gap--tight: fct.px-to-rem(8);
     border: none;
     border-radius: fct.px-to-rem(8);
     background-color: var(--bg-dialog-field);
-    color: var(--text-tertiary);
+    // var(--text-tertiary) is white on games/projects/food, unreadable on
+    // this light dialog background - use the same literal dark color the
+    // Result-page score badge already uses on the same background.
+    color: #1c1c1c;
     box-shadow: 0 fct.px-to-rem(8) fct.px-to-rem(24) rgba(0, 0, 0, 0.25);
 
     &[open] {

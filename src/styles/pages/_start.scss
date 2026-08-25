@@ -5,21 +5,28 @@ body {
   background-color: var(--bg__start);
 }
 
-.welcome {
-  position: relative;
-  z-index: 1;
+#app {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  padding-inline: fct.px-to-rem(24);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome {
+  @include mx.column-center();
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
   gap: fct.px-to-rem(32);
   color: var(--text-start);
-  font-family: "Figtree", sans-serif;
   text-align: center;
 
-  span {
+  &__intro {
     color: var(--text-start-muted);
     font-family: "Almarai", sans-serif;
     font-weight: 400;
@@ -39,14 +46,23 @@ body {
       font-size: fct.px-to-rem(78);
     }
   }
+
+  @media screen and (max-height: 700px) {
+    &__intro {
+      font-size: fct.px-to-rem(32);
+    }
+
+    h1 {
+      font-size: fct.px-to-rem(90);
+    }
+  }
 }
 
 .button__entry {
   @include mx.flex-row();
-  justify-content: center;
+  justify-content: space-between;
   width: fct.px-to-rem(250);
-  height: fct.px-to-rem(98);
-  gap: fct.px-to-rem(40);
+  height: fct.px-to-rem(100);
   margin-top: fct.px-to-rem(32);
   padding: fct.px-to-rem(16) fct.px-to-rem(24);
   border: none;
@@ -57,16 +73,27 @@ body {
   font-weight: 700;
   font-size: fct.px-to-rem(40);
   cursor: pointer;
-  transition: filter 0.2s ease-in-out;
+  transition:
+    filter 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
 
   &:hover {
     filter: brightness(0.95);
+    // Scales the 250x100 box to 270x105 visually, without changing its
+    // layout size - avoids reflowing/shifting the centered content above
+    // it (and the scrollbar that reflow triggered).
+    transform: scale(1.08, 1.05);
   }
 }
 
+.button__entry-label {
+  @include mx.flex-row();
+  gap: fct.px-to-rem(16);
+}
+
 #imprint {
-  position: absolute;
-  right: fct.px-to-rem(24);
-  bottom: fct.px-to-rem(24);
+  position: relative;
   z-index: 1;
+  padding-block: fct.px-to-rem(24);
+  text-align: center;
 }

@@ -161,6 +161,9 @@
 
 .button__start {
   @include mx.flex-row();
+  justify-content: center;
+  width: fct.px-to-rem(130);
+  height: fct.px-to-rem(55);
   gap: fct.px-to-rem(8);
   margin-left: auto;
   padding: fct.px-to-rem(12) fct.px-to-rem(20);
@@ -172,14 +175,19 @@
   font-weight: 700;
   font-size: fct.px-to-rem(20);
   cursor: pointer;
-  transition: filter 0.2s ease-in-out;
+  transition:
+    filter 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
 
   &:not(:disabled):hover {
     filter: brightness(0.95);
+    // Scales the 130x55 box to 140x60 visually, without changing its
+    // layout size - avoids reflowing the settings__bar around it.
+    transform: scale(1.0769, 1.0909);
   }
 
   &:disabled {
-    opacity: 0.5;
+    background-color: #dbdbd6;
     cursor: not-allowed;
   }
 }

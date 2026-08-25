@@ -133,7 +133,7 @@ export function createSettingsPage() {
                 <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
                 <span data-bar-board-size>Board-Size</span>
                 <button class="button button__start" disabled>
-                    <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/arrow.svg" alt="">
+                    <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/smart_display.svg" alt="">
                     Start
                 </button>
             </div>
@@ -157,6 +157,18 @@ export function createSettingsPage() {
   );
   const startButtonRef =
     settingsRef.querySelector<HTMLButtonElement>(".button__start");
+  const startIconRef = settingsRef.querySelector<HTMLImageElement>(
+    ".icon__entry--start",
+  );
+
+  startButtonRef?.addEventListener("mouseenter", () => {
+    if (startIconRef)
+      startIconRef.src = `${BASE_URL}assets/icons/smart_display-hover.svg`;
+  });
+  startButtonRef?.addEventListener("mouseleave", () => {
+    if (startIconRef)
+      startIconRef.src = `${BASE_URL}assets/icons/smart_display.svg`;
+  });
 
   let selectedTheme: string | null = null;
   let selectedPlayer: string | null = null;

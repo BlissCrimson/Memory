@@ -11,6 +11,13 @@
   align-items: center;
 }
 
+@mixin column-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @mixin fade-in($time: 0.3, $ease: ease-in-out) {
   animation: fadeIn $time $ease forwards;
 }

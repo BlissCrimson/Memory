@@ -46,6 +46,11 @@
   &--button {
     width: fct.px-to-rem(44);
     height: auto;
+    transition: transform 0.2s ease-in-out;
+
+    .button__entry:hover & {
+      transform: rotate(-25.77deg);
+    }
   }
 
   &--legend {
@@ -59,8 +64,8 @@
   }
 
   &--start {
-    width: fct.px-to-rem(16);
-    height: auto;
+    width: fct.px-to-rem(25);
+    height: fct.px-to-rem(25);
   }
 }
 
