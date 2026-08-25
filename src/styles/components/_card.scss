@@ -89,3 +89,9 @@
     }
   }
 }
+
+[data-theme="games"] .icon__card-back,
+[data-theme="projects"] .icon__card-back,
+[data-theme="food"] .icon__card-back {
+  display: none;
+}

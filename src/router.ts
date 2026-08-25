@@ -20,6 +20,7 @@ const routes: Record<string, RouteHandler> = {
  * @param path - The path of the route to render.
  */
 export function renderRoute(path: string) {
+  document.body.removeAttribute("data-theme");
   const BASE_URL = import.meta.env.BASE_URL;
   const fn = routes[path];
   if (fn) {

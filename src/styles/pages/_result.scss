@@ -130,7 +130,7 @@
   }
 
   .result__title--winner {
-    font-family: "Red Rose", sans-serif;
+    font-family: var(--font-code);
     text-transform: uppercase;
 
     &.result__title--blue {
@@ -157,7 +157,7 @@
   }
 
   .result__title--winner {
-    font-family: "Orbitron", sans-serif;
+    font-family: var(--font-games-first);
 
     &.result__title--blue {
       color: var(--text-player-blue);
@@ -169,7 +169,7 @@
   }
 
   .result__title--draw {
-    font-family: "Orbitron", sans-serif;
+    font-family: var(--font-games-first);
     color: var(--border-default);
   }
 
@@ -188,7 +188,7 @@
   }
 
   .result__title--winner {
-    font-family: "Figtree", sans-serif;
+    font-family: var(--font-project-first);
     color: var(--text-tertiary);
   }
 
@@ -209,21 +209,22 @@
 
   .result__lead {
     color: var(--text-secondary);
-    font-family: "Klee One", cursive;
+    font-family: var(--font-first);
   }
 
   .result__title--winner {
-    font-family: "Klee One", cursive;
+    font-family: var(--font-first);
     color: var(--text-primary);
   }
 
   .result__title--draw {
-    font-family: "Klee One", cursive;
+    font-family: var(--font-first);
     color: var(--text-secondary);
   }
 
   .result__button {
     background-color: var(--btn-primary-bg);
     color: var(--text-tertiary);
+    font-family: var(--font-buttons);
   }
 }

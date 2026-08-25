@@ -8,6 +8,7 @@ $gap--tight: fct.px-to-rem(8);
   display: grid;
   gap: $gap;
   justify-content: center;
+  align-content: center;
   margin-inline: auto;
   padding: fct.px-to-rem(32);
 
@@ -26,22 +27,73 @@ $gap--tight: fct.px-to-rem(8);
   &--24,
   &--36 {
     grid-template-columns: repeat(6, max-content);
+    gap: $gap--tight;
+  }
+
+  // 36-card boards stack 6 rows of cards, which - together with the fixed
+  // 875px game container height - leaves very little vertical room; padding
+  // is cut to the minimum needed so the field never overflows the container.
+  &--36 {
+    padding-block: fct.px-to-rem(4);
   }
 }
 
-[data-theme="projects"] .field--24,
-[data-theme="projects"] .field--36,
-[data-theme="food"] .field--24,
-[data-theme="food"] .field--36 {
-  gap: $gap--tight;
+body[data-theme] {
+  background-color: var(--bg-base);
 }
 
 .game {
-  min-height: 100vh;
-  background-color: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  width: fct.px-to-rem(1220);
+  height: fct.px-to-rem(875);
+  margin-top: 3px;
+  margin-inline: auto;
+
+  #gameField {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &[data-theme="code"] {
+    font-family: var(--font-code);
+  }
+
+  &[data-theme="games"] {
+    font-family: var(--font-games-first);
+  }
+
+  &[data-theme="projects"] {
+    font-family: var(--font-project-first);
+
+    .game__bar {
+      color: var(--text-primary);
+    }
+
+    .game__exit {
+      border-color: transparent;
+      background-color: var(--btn-primary-bg);
+      color: var(--text-primary);
+    }
+  }
+
+  &[data-theme="food"] {
+    font-family: var(--font-first);
+
+    .game__exit,
+    .game__exit-dialog-cancel,
+    .game__exit-dialog-confirm {
+      font-family: var(--font-buttons);
+    }
+  }
 
   &__bar {
-    max-width: 1220px;
+    flex-shrink: 0;
+    width: fct.px-to-rem(1220);
+    height: fct.px-to-rem(105);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -54,6 +106,12 @@ $gap--tight: fct.px-to-rem(8);
       flex-wrap: wrap;
       padding: fct.px-to-rem(12) fct.px-to-rem(16);
     }
+  }
+
+  &[data-theme="games"] &__bar,
+  &[data-theme="food"] &__bar,
+  &[data-theme="projects"] &__bar {
+    border-radius: fct.px-to-rem(10);
   }
 
   &__current {
@@ -92,7 +150,7 @@ $gap--tight: fct.px-to-rem(8);
     border-radius: fct.px-to-rem(8);
     background: transparent;
     color: inherit;
-    font-family: "Red Rose", sans-serif;
+    font-family: inherit;
     font-weight: 700;
     font-size: fct.px-to-rem(16);
     cursor: pointer;
@@ -158,7 +216,6 @@ $gap--tight: fct.px-to-rem(8);
     }
 
     &-text {
-      font-family: "Figtree", sans-serif;
       font-size: fct.px-to-rem(20);
       font-weight: 700;
       text-align: center;
@@ -173,7 +230,7 @@ $gap--tight: fct.px-to-rem(8);
     &-confirm {
       padding: fct.px-to-rem(10) fct.px-to-rem(18);
       border-radius: fct.px-to-rem(8);
-      font-family: "Red Rose", sans-serif;
+      font-family: inherit;
       font-weight: 700;
       font-size: fct.px-to-rem(16);
       cursor: pointer;

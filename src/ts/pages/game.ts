@@ -28,9 +28,11 @@ export function createGamePage() {
     sessionStorage.getItem("memory:boardSize") ?? "16",
   ) as 16 | 24 | 36;
 
+  document.body.dataset.theme = theme;
+
   gameRef.innerHTML = `
     <div class="game" data-theme="${theme}">
-        <header class="game__bar">
+        <div class="game__bar">
             <div class="game__scores">
                 <span class="game__score game__score--blue">
                     <img src="${BASE_URL}assets/icons/chess_pawn-blue.svg" alt="Blue">
@@ -46,7 +48,7 @@ export function createGamePage() {
                 <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
             </p>
             <button class="button game__exit" data-exit>Exit game</button>
-        </header>
+        </div>
         <div id="gameField"></div>
 
         <dialog class="game__exit-dialog" data-exit-dialog>
