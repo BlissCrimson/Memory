@@ -31,8 +31,8 @@ const DRAW_ICON: Record<string, string> = {
 
 /** Themes that ship a dedicated "DRAW" wordmark asset; the rest render styled text. */
 const DRAW_TITLE_ASSET: Partial<Record<string, string>> = {
-  code: "assets/img/codeTheme/DRAW_white.svg",
-  projects: "assets/img/projectsTheme/DRAW.svg",
+  code: "assets/img/themes/code/draw-white.svg",
+  projects: "assets/img/themes/projects/draw.svg",
 };
 
 const PLAYER_LABELS: Record<Player, string> = {

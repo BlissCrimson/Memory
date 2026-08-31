@@ -31,10 +31,10 @@ export function createSettingsPage() {
   const BASE_URL = import.meta.env.BASE_URL;
 
   const previewImgs: Record<string, string> = {
-    codes: `${BASE_URL}assets/img/codeTheme/theme-codelogos.svg`,
-    gaming: `${BASE_URL}assets/img/gamingTheme/theme-game.svg`,
-    "da-projects": `${BASE_URL}assets/img/projectsTheme/theme-projects.svg`,
-    food: `${BASE_URL}assets/img/foodTheme/theme-foods.svg`,
+    codes: `${BASE_URL}assets/img/themes/code/preview.svg`,
+    gaming: `${BASE_URL}assets/img/themes/gaming/preview.svg`,
+    "da-projects": `${BASE_URL}assets/img/themes/projects/preview.svg`,
+    food: `${BASE_URL}assets/img/themes/food/preview.svg`,
   };
 
   settingsRef.innerHTML = `

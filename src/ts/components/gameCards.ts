@@ -9,89 +9,88 @@ export interface GameFieldCallbacks {
 }
 
 const THEME_ASSET_FOLDERS: Record<string, string> = {
-  codes: "codeVibeTheme",
-  gaming: "gameThemeCards",
-  "da-projects": "DaProjectsTheme",
-  food: "foodTheme",
+  codes: "code",
+  gaming: "gaming",
+  "da-projects": "projects",
+  food: "food",
 };
 
 const THEME_ASSET_FILES: Record<string, string[]> = {
-  codeVibeTheme: [
-    "logo__ts.svg",
-    "logo__js.svg",
-    "logo__html.svg",
-    "logo__vsCode.svg",
-    "logo__django.svg",
-    "logo__css.svg",
-    "logo__angular.svg",
-    "logo__cli.svg",
-    "logo__python.svg",
-    "logo__github.svg",
-    "logo__nodeJs.svg",
-    "logo__bootstrap.svg",
-    "logo__react.svg",
-    "logo__sql.svg",
-    "logo__vueJs.svg",
-    "logo__sass.svg",
-    "logo__firebase.svg",
-    "logo__git.svg",
+  code: [
+    "logo-ts.svg",
+    "logo-js.svg",
+    "logo-html.svg",
+    "logo-vscode.svg",
+    "logo-django.svg",
+    "logo-css.svg",
+    "logo-angular.svg",
+    "logo-cli.svg",
+    "logo-python.svg",
+    "logo-github.svg",
+    "logo-nodejs.svg",
+    "logo-bootstrap.svg",
+    "logo-react.svg",
+    "logo-sql.svg",
+    "logo-vuejs.svg",
+    "logo-sass.svg",
+    "logo-firebase.svg",
+    "logo-git.svg",
   ],
-  gameThemeCards: [
-    "Front.svg",
-    "Front (1).svg",
-    "Front (2).svg",
-    "Front (3).svg",
-    "Front (4).svg",
-    "Front (5).svg",
-    "Front (6).svg",
-    "Front (7).svg",
-    "Front (8).svg",
-    "Front (9).svg",
-    "Front (10).svg",
-    "Front (11).svg",
-    "Front (12).svg",
-    "Front (13).svg",
-    "Front (14).svg",
-    "Front (15).svg",
-    "Front (16).svg",
+  gaming: [
+    "card-01.svg",
+    "card-02.svg",
+    "card-03.svg",
+    "card-04.svg",
+    "card-05.svg",
+    "card-06.svg",
+    "card-07.svg",
+    "card-08.svg",
+    "card-09.svg",
+    "card-10.svg",
+    "card-11.svg",
+    "card-12.svg",
+    "card-13.svg",
+    "card-14.svg",
+    "card-15.svg",
+    "card-16.svg",
+    "card-17.svg",
   ],
-  DaProjectsTheme: [
-    "front.svg",
-    "front (1).svg",
-    "sakura__flower.svg",
-    "front (3).svg",
-    "front (4).svg",
-    "front (5).svg",
+  projects: [
+    "card-01.svg",
+    "card-02.svg",
+    "sakura-flower.svg",
+    "card-03.svg",
+    "card-04.svg",
+    "card-05.svg",
     "basket.svg",
     "pokeball.svg",
     "tictactoe.svg",
-    "front (9).svg",
-    "front (10).svg",
-    "front (11).svg",
+    "card-06.svg",
+    "card-07.svg",
+    "card-08.svg",
     "sombrero.svg",
-    "front (13).svg",
-    "front (14).svg",
-    "front (15).svg",
+    "card-09.svg",
+    "card-10.svg",
+    "card-11.svg",
   ],
-  foodTheme: [
-    "frond.svg",
-    "frond (1).svg",
-    "frond (2).svg",
-    "frond (3).svg",
-    "frond (4).svg",
-    "frond (5).svg",
-    "frond (6).svg",
-    "frond (7).svg",
-    "frond (8).svg",
-    "frond (9).svg",
-    "frond (10).svg",
-    "frond (11).svg",
-    "frond (12).svg",
-    "frond (13).svg",
-    "frond (14).svg",
-    "frond (15).svg",
-    "frond (16).svg",
-    "frond (17).svg",
+  food: [
+    "card-01.svg",
+    "card-02.svg",
+    "card-03.svg",
+    "card-04.svg",
+    "card-05.svg",
+    "card-06.svg",
+    "card-07.svg",
+    "card-08.svg",
+    "card-09.svg",
+    "card-10.svg",
+    "card-11.svg",
+    "card-12.svg",
+    "card-13.svg",
+    "card-14.svg",
+    "card-15.svg",
+    "card-16.svg",
+    "card-17.svg",
   ],
 };
 
@@ -115,11 +114,11 @@ function getPairImages(pairCount: number, themeValue: string): string[] {
   const BASE_URL = import.meta.env.BASE_URL;
   const folder =
     THEME_ASSET_FOLDERS[themeValue] ?? THEME_ASSET_FOLDERS.codes;
-  const files = THEME_ASSET_FILES[folder] ?? THEME_ASSET_FILES.codeVibeTheme;
+  const files = THEME_ASSET_FILES[folder] ?? THEME_ASSET_FILES.code;
   return Array.from(
     { length: pairCount },
     (_, i) =>
-      `${BASE_URL}assets/img/cards/${folder}/${encodeURIComponent(files[i % files.length])}`,
+      `${BASE_URL}assets/img/themes/${folder}/cards/${encodeURIComponent(files[i % files.length])}`,
   );
 }
 
@@ -156,7 +155,7 @@ export function createGameField(
                     <img src="${pairImages[pairId]}" alt="">
                 </div>
                 <div class="card__face card__face--back">
-                    <img class="icon__card-back" src="${BASE_URL}assets/img/cards/card__back.svg" alt="">
+                    <img class="icon__card-back" src="${BASE_URL}assets/img/shared/card-back.svg" alt="">
                 </div>
             </div>
         </button>

@@ -19,7 +19,7 @@
   left: 0;
   width: 100%;
   height: fct.px-to-rem(120);
-  background-image: url("../../../public/assets/img/confetti.svg");
+  background-image: url("../../../public/assets/img/shared/confetti.svg");
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -29,7 +29,7 @@
   }
 
   @include mx.respond-min(xl) {
-    background-image: url("../../../public/assets/img/confetti__widescreen.svg");
+    background-image: url("../../../public/assets/img/shared/confetti-widescreen.svg");
   }
 }
 
