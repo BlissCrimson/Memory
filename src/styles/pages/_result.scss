@@ -130,7 +130,7 @@
   }
 
   .result__title--winner {
-    font-family: var(--font-code);
+    font-family: var(--font-primary);
     text-transform: uppercase;
 
     &.result__title--blue {
@@ -157,7 +157,7 @@
   }
 
   .result__title--winner {
-    font-family: var(--font-games-first);
+    font-family: var(--font-primary);
 
     &.result__title--blue {
       color: var(--text-player-blue);
@@ -169,7 +169,7 @@
   }
 
   .result__title--draw {
-    font-family: var(--font-games-first);
+    font-family: var(--font-primary);
     color: var(--border-default);
   }
 
@@ -188,7 +188,7 @@
   }
 
   .result__title--winner {
-    font-family: var(--font-project-first);
+    font-family: var(--font-primary);
     color: var(--text-tertiary);
   }
 
@@ -209,22 +209,22 @@
 
   .result__lead {
     color: var(--text-secondary);
-    font-family: var(--font-first);
+    font-family: var(--font-primary);
   }
 
   .result__title--winner {
-    font-family: var(--font-first);
+    font-family: var(--font-primary);
     color: var(--text-primary);
   }
 
   .result__title--draw {
-    font-family: var(--font-first);
+    font-family: var(--font-primary);
     color: var(--text-secondary);
   }
 
   .result__button {
     background-color: var(--btn-primary-bg);
     color: var(--text-tertiary);
-    font-family: var(--font-buttons);
+    font-family: var(--font-secondary);
   }
 }

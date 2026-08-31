@@ -128,9 +128,9 @@ export function createSettingsPage() {
 
             <div class="settings__bar">
                 <span data-bar-theme>GameTheme</span>
-                <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                <img class="icon icon__entry icon__entry--slash" data-slash-theme src="${BASE_URL}assets/icons/slash-line.svg" alt="">
                 <span data-bar-player>Player</span>
-                <img class="icon icon__entry icon__entry--slash" src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                <img class="icon icon__entry icon__entry--slash" data-slash-player src="${BASE_URL}assets/icons/slash-line.svg" alt="">
                 <span data-bar-board-size>Board-Size</span>
                 <button class="button button__start" disabled>
                     <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/smart_display.svg" alt="">
@@ -154,6 +154,12 @@ export function createSettingsPage() {
   );
   const barBoardSizeRef = settingsRef.querySelector<HTMLElement>(
     "[data-bar-board-size]",
+  );
+  const slashThemeRef = settingsRef.querySelector<HTMLImageElement>(
+    "[data-slash-theme]",
+  );
+  const slashPlayerRef = settingsRef.querySelector<HTMLImageElement>(
+    "[data-slash-player]",
   );
   const startButtonRef =
     settingsRef.querySelector<HTMLButtonElement>(".button__start");
@@ -197,6 +203,8 @@ export function createSettingsPage() {
         applyPreview(input.value);
         if (barThemeRef)
           barThemeRef.textContent = `${THEME_LABELS[input.value]} Theme`;
+        if (slashThemeRef)
+          slashThemeRef.src = `${BASE_URL}assets/icons/slash-line-used.svg`;
         updateStartButtonState();
       });
 
@@ -217,6 +225,8 @@ export function createSettingsPage() {
         selectedPlayer = input.value;
         if (barPlayerRef)
           barPlayerRef.textContent = `${PLAYER_LABELS[input.value]} Player`;
+        if (slashPlayerRef)
+          slashPlayerRef.src = `${BASE_URL}assets/icons/slash-line-used.svg`;
         updateStartButtonState();
       });
     });

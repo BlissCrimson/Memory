@@ -14,9 +14,12 @@
 
   // Border
   --border-default: #4dd5bc;
+  --border-shadow: #4dd5bc33;
 
   // Button
   --btn-primary-bg: var(--bg-surface);
+  --btn-exit-bg: #3c4b48;
+  --btn-exit-bg-hover: #47605c;
   --btn-secondary-bg: #66cfbc;
   --btn-tertiary-bg: #eefcf9;
 
@@ -27,6 +30,7 @@
   --state-card-back-end: #31685e;
   --state-card-img: #6ed5c2;
 
-  // fonts
-  --font-code: "Red Rose", sans-serif;
+  // Fonts
+  --font-primary: "Red Rose", sans-serif;
+  --font-secondary: ; // TODO: Wert festlegen
 }

@@ -58,17 +58,14 @@ body[data-theme] {
     overflow: hidden;
   }
 
-  &[data-theme="code"] {
-    font-family: var(--font-code);
-  }
-
-  &[data-theme="games"] {
-    font-family: var(--font-games-first);
+  &[data-theme="code"],
+  &[data-theme="games"],
+  &[data-theme="projects"],
+  &[data-theme="food"] {
+    font-family: var(--font-primary);
   }
 
   &[data-theme="projects"] {
-    font-family: var(--font-project-first);
-
     .game__bar {
       color: var(--text-primary);
     }
@@ -81,12 +78,10 @@ body[data-theme] {
   }
 
   &[data-theme="food"] {
-    font-family: var(--font-first);
-
     .game__exit,
     .game__exit-dialog-cancel,
     .game__exit-dialog-confirm {
-      font-family: var(--font-buttons);
+      font-family: var(--font-secondary);
     }
   }
 

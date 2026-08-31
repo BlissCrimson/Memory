@@ -47,7 +47,7 @@ export function createGamePage() {
                 Current player:
                 <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
             </p>
-            <button class="button game__exit" data-exit>Exit game</button>
+            <button class="button button__${theme} button__${theme}--exit game__exit" data-exit>Exit game</button>
         </div>
         <div id="gameField"></div>
 

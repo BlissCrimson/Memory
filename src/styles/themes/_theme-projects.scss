@@ -14,10 +14,14 @@
 
   // Border
   --border-default: var(--text-primary);
+  --border-shadow: ; // TODO: Wert festlegen
 
   // Button
   --btn-primary-bg: #bfe5f2;
   --btn-secondary-bg: #fd8a81;
+  --btn-tertiary-bg: ; // TODO: Wert festlegen
+  --btn-exit-bg: ; // TODO: Wert festlegen
+  --btn-exit-bg-hover: ; // TODO: Wert festlegen
 
   // Game State
   --state-player-blue: var(--text-player-blue);
@@ -26,6 +30,7 @@
   --state-card-back-end: var(--border-default);
   --state-card-img: #4b91a9;
 
-  // fonts
-  --font-project-first: "Figtree", sans-serif;
+  // Fonts
+  --font-primary: "Figtree", sans-serif;
+  --font-secondary: ; // TODO: Wert festlegen
 }

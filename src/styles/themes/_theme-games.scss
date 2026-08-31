@@ -14,18 +14,23 @@
 
   // Border
   --border-default: #e71c4f;
+  --border-shadow: #2f2e2e33;
 
   // Button
   --btn-primary-bg: #bfe5f2;
   --btn-secondary-bg: #fd8d81;
   --btn-tertiary-bg: var(--text-tertiary);
+  --btn-exit-bg: #394b61;
+  --btn-exit-bg-hover: #444862;
 
   // Game State
   --state-player-blue: var(--text-player-blue);
   --state-player-orange: var(--text-player-orange);
   --state-card-back-start: var(--text-primary);
   --state-card-back-end: var(--state-card-back-start);
+  --state-card-img: ; // TODO: Wert festlegen
 
-  // fonts
-  --font-games-first: "Orbitron", sans-serif;
+  // Fonts
+  --font-primary: "Orbitron", sans-serif;
+  --font-secondary: ; // TODO: Wert festlegen
 }

@@ -14,9 +14,14 @@
 
   // Border
   --border-default: var(--text-secondary);
+  --border-shadow: ; // TODO: Wert festlegen
 
   // Button
   --btn-primary-bg: #ffab3e;
+  --btn-secondary-bg: ; // TODO: Wert festlegen
+  --btn-tertiary-bg: ; // TODO: Wert festlegen
+  --btn-exit-bg: ; // TODO: Wert festlegen
+  --btn-exit-bg-hover: ; // TODO: Wert festlegen
 
   // Game State
   --state-player-blue: var(--text-player-blue);
@@ -25,8 +30,8 @@
   --state-card-back-end: var(--text-secondary);
   --state-card-img: #f59c57;
 
-  // fonts
-  --font-first: "Klee One", cursive;
-  --font-buttons: "Delius Unicase", sans-serif;
-  --font-counter-gameOver: "Red Rose", sans-serif;
+  // Fonts
+  --font-primary: "Klee One", cursive;
+  --font-secondary: "Delius Unicase", sans-serif;
+  // TODO: unused – wird "Red Rose" (bisher --font-counter-gameOver) noch gebraucht?
 }
