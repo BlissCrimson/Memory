@@ -1,0 +1,9 @@
+# The app moved from GitHub Pages to plain FTPS hosting (see
+# .github/workflows/deploy.yml), so GitHub Pages' automatic "serve 404.html
+# for any unknown path" behavior no longer applies - without it, a direct
+# link/reload on e.g. /memory/game hits the web server's own 404 page instead
+# of this single-page app. This restores the same behavior on Apache: any
+# unmatched request under /memory/ gets 404.html, whose existing
+# redirect-with-encoded-path script (see public/404.html, index.html) then
+# hands control back to the app's router.
+ErrorDocument 404 /memory/404.html
