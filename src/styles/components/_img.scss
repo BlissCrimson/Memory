@@ -18,10 +18,8 @@
   &--big {
     position: absolute;
     left: fct.px-to-rem(-40);
-    // Pushed up from the bottom edge: a 520px square rotated 45° has a
-    // ~735px diagonal, so its rotated bounding box extends roughly
-    // (735-520)/2 ≈ 107px below its own un-rotated bottom edge. Without
-    // this offset the icon would overflow past 100vh at the bottom.
+    // Offsets the ~107px a 520px square gains below its own bottom edge
+    // once rotated 45°, so it doesn't overflow past 100vh.
     bottom: fct.px-to-rem(110);
     z-index: 0;
     width: fct.px-to-rem(520);

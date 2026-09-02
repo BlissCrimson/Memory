@@ -1,3 +1,4 @@
+@use "sass:math";
 @use "../abstract/mixin" as mx;
 @use "../abstract/functions" as fct;
 
@@ -8,6 +9,18 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes result-confetti-fall {
+  from {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
   }
 }
 
@@ -26,21 +39,36 @@
 
 .result__confetti {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: fct.px-to-rem(120);
-  background-image: url("../../../public/assets/img/shared/confetti.svg");
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 
-  @include mx.respond(sm) {
-    height: fct.px-to-rem(72);
+// CSS-drawn pieces (rather than the static confetti.svg banner) so the
+// animation can actually fall instead of just sitting as a fixed image.
+.result__confetti-piece {
+  position: absolute;
+  top: -5%;
+  width: fct.px-to-rem(10);
+  height: fct.px-to-rem(16);
+  background-color: var(--text-player-blue);
+  border-radius: fct.px-to-rem(2);
+  animation: result-confetti-fall 2.6s linear infinite;
+
+  &:nth-child(3n + 2) {
+    background-color: var(--text-player-orange);
   }
 
-  @include mx.respond-min(xl) {
-    background-image: url("../../../public/assets/img/shared/confetti-widescreen.svg");
+  &:nth-child(3n) {
+    background-color: var(--text-tertiary);
+  }
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      left: math.percentage(math.div($i - 1, 11));
+      animation-delay: #{math.div($i, 5) - 2.6}s;
+      animation-duration: #{2.2 + math.div($i % 4, 3)}s;
+    }
   }
 }
 
@@ -96,6 +124,18 @@
   background-color: var(--bg-dialog-field);
   color: #1c1c1c;
   font-size: fct.px-to-rem(24);
+  font-weight: 700;
+
+  // Same swap as .game-over__score / .game__scores: Code's light
+  // --bg-dialog-field clashes with its dark theme, the other 3 themes keep
+  // the light badge since their --bg-dialog-field is already light.
+  [data-theme="code"] & {
+    background-color: var(--bg-surface);
+    color: var(--text-tertiary);
+  }
+}
+
+.result__score-label {
   font-weight: 700;
 }
 

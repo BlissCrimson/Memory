@@ -106,12 +106,8 @@
   flex-direction: column;
   align-items: flex-end;
   gap: fct.px-to-rem(24);
-  // Fixed (not content-driven) so the column's own width never changes when
-  // .settings__bar grows/shrinks with a longer/shorter selected label -
-  // without this, the whole .settings row (centered via justify-content)
-  // visibly shifted sideways on every selection. Wide enough for the
-  // longest possible bar content ("DA Projects Theme / Orange Player /
-  // Board-24 Cards", measured ~668px) plus headroom.
+  // Fixed width so the column never shifts .settings sideways when the
+  // bar's content changes; wide enough for the longest bar content (~668px).
   width: fct.px-to-rem(700);
 }
 
@@ -142,12 +138,9 @@
 
 .settings__bar {
   @include mx.flex-row();
-  // Hugs its own content (grows/shrinks with the selected label), but sits
-  // inside the now fixed-width .settings__right, right-aligned via that
-  // parent's align-items:flex-end - so only the bar's left edge moves, the
-  // page layout around it stays put.
-  width: fit-content;
-  min-width: fct.px-to-rem(580);
+  // Fixed width (not fit-content) so the bar - and the Start button after it
+  // - never resizes when a label changes to a shorter/longer selected value.
+  width: fct.px-to-rem(660);
   height: fct.px-to-rem(80);
   flex-wrap: nowrap;
   gap: fct.px-to-rem(16);
@@ -157,10 +150,29 @@
   font-size: fct.px-to-rem(16);
   font-weight: 400;
 
+  @include mx.respond(sm) {
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    padding: fct.px-to-rem(12) fct.px-to-rem(16);
+    gap: fct.px-to-rem(8);
+  }
+}
+
+// Groups the labels+separators so they center as a unit left of the Start
+// button, re-centering (not just re-lefting) as label text length changes.
+.settings__bar-labels {
+  @include mx.flex-row();
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: fct.px-to-rem(16);
+  min-width: 0;
+
   [data-bar-theme],
   [data-bar-player],
   [data-bar-board-size] {
     flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
@@ -170,7 +182,7 @@
   width: fct.px-to-rem(130);
   height: fct.px-to-rem(55);
   gap: fct.px-to-rem(8);
-  margin-left: auto;
+  flex-shrink: 0;
   padding: fct.px-to-rem(12) fct.px-to-rem(20);
   border: none;
   border-radius: 0;

@@ -80,10 +80,8 @@ body[data-theme] {
       color: var(--text-tertiary);
     }
 
-    // .game__bar's shared color:var(--text-tertiary) is mint for Code
-    // (used elsewhere for accents), not the white "Current player" text
-    // the mockup shows - only Code needs this override, --text-tertiary
-    // is already white on the other 3 themes.
+    // --text-tertiary is mint for Code (not the mockup's white); the other
+    // 3 themes already have it white, so only Code needs this override.
     .game__current {
       color: var(--text-primary);
     }
@@ -216,15 +214,19 @@ body[data-theme] {
       font-family: var(--font-secondary);
     }
 
-    // Food replaces the CSS border with a hand-drawn frame image on the
-    // header exit button and the dialog's "Back to game" button (unlike
-    // Code/Games/Projects, which use --border-default/a CSS radius).
+    // Food uses a hand-drawn frame image instead of a CSS border here; the
+    // box is sized to the SVG's native canvas (176x49) so background-size:
+    // 100% 100% doesn't stretch it off-proportion.
     .game__exit {
+      width: fct.px-to-rem(176);
+      height: fct.px-to-rem(49);
+      justify-content: center;
       background: var(--btn-exit-header-bg);
       background-image: url("../../../public/assets/img/themes/food/exit-border.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       border-color: transparent;
+      border-radius: fct.px-to-rem(10);
       color: var(--text-secondary);
 
       &:hover {
@@ -235,11 +237,17 @@ body[data-theme] {
     }
 
     .game__exit-dialog-cancel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fct.px-to-rem(214);
+      height: fct.px-to-rem(48);
       background-color: var(--btn-secondary-bg);
       background-image: url("../../../public/assets/img/themes/food/back-border.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       border-color: transparent;
+      border-radius: fct.px-to-rem(10);
       color: var(--text-tertiary);
 
       &:hover {

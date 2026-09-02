@@ -1,0 +1,4 @@
+# Restores GitHub Pages' "serve 404.html for any unknown path" behavior on
+# this app's Apache/FTPS host, so a direct link/reload under /memory/ reaches
+# the SPA's router instead of the server's own 404 page.
+ErrorDocument 404 /memory/404.html

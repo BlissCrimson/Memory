@@ -21,6 +21,8 @@ const SCORE_ICON: Record<string, string> = {
   food: "assets/icons/chess_pawn-{player}.svg",
 };
 
+const AUTO_CONTINUE_DELAY_MS = 2500;
+
 /**
  * Show the Game Over screen: theme-specific "Game over" wordmark plus the
  * final score, read from the score the game page wrote to sessionStorage
@@ -81,13 +83,25 @@ export function createGameOverPage() {
     </section>
   `;
 
+  registerGameOverAutoContinue(gameOverRef);
+}
+
+// Advances to /result on its own after a delay; tap/Enter still skip ahead
+// immediately (hasStarted guards against both firing).
+function registerGameOverAutoContinue(gameOverRef: HTMLElement): void {
   const continueRef = gameOverRef.querySelector<HTMLElement>("[data-continue]");
-  // Fade out before navigating so the switch to the winner/draw screen
-  // reads as one animated transition instead of an instant cut.
+  let hasStarted = false;
+
   function goToResult() {
+    if (hasStarted) return;
+    hasStarted = true;
+    // Fade out before navigating so the switch to the winner/draw screen
+    // reads as one animated transition instead of an instant cut.
     continueRef?.classList.add("is-leaving");
     setTimeout(() => navigate("/result"), 250);
   }
+
+  setTimeout(goToResult, AUTO_CONTINUE_DELAY_MS);
   continueRef?.addEventListener("click", goToResult);
   continueRef?.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {

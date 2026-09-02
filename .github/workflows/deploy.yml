@@ -36,6 +36,18 @@ jobs:
       #     publish_dir: ./dist
 
       - name: Deploy to FTPS
+        id: deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTPS_SERVER }}
+          username: ${{ secrets.FTPS_USERNAME }}
+          password: ${{ secrets.FTPS_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /memory/
+        continue-on-error: true
+
+      - name: Retry Deploy to FTPS
+        if: steps.deploy.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTPS_SERVER }}

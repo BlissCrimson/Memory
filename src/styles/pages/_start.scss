@@ -5,11 +5,23 @@ body {
   background-color: var(--bg__start);
 }
 
+// Only affects pages whose #app child is shorter than the viewport (.game).
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  justify-content: center;
+  min-height: 100dvh;
   position: relative;
+}
+
+// Home-page-only: stretches .container to #app's full height so .welcome
+// centers correctly and the absolutely-positioned background icon anchors
+// to the viewport, not just to .welcome's own content height.
+#app > .container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .welcome {
@@ -99,9 +111,12 @@ body {
   gap: fct.px-to-rem(16);
 }
 
+// Kept out of the flow so its height never pushes #app past one viewport
+// (that was breaking .welcome's vertical centering on tall viewports).
 #imprint {
-  position: relative;
+  position: absolute;
+  right: fct.px-to-rem(24);
+  bottom: fct.px-to-rem(24);
   z-index: 1;
-  padding-block: fct.px-to-rem(24);
   text-align: center;
 }
