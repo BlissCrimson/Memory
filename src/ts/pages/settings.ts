@@ -341,6 +341,10 @@ function registerStartButtonClick(
   });
 }
 
+function createEmptySelection(): SettingsSelection {
+  return { theme: null, player: null, boardSize: null };
+}
+
 /**
  * Show the Settings page.
  *
@@ -352,11 +356,7 @@ export function createSettingsPage() {
   settingsRef.innerHTML = buildSettingsMarkup();
 
   const elements = querySettingsElements(settingsRef);
-  const selection: SettingsSelection = {
-    theme: null,
-    player: null,
-    boardSize: null,
-  };
+  const selection = createEmptySelection();
 
   registerStartButtonHover(elements);
   registerThemeRadios(settingsRef, elements, selection);

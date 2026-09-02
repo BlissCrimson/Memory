@@ -128,6 +128,16 @@ function evaluateCardPair(
   }
 }
 
+function isCardClickable(state: GameFieldState, cardRef: HTMLElement): boolean {
+  if (
+    cardRef.classList.contains("is-flipped") ||
+    cardRef.classList.contains("is-matched")
+  ) {
+    return false;
+  }
+  return !(state.firstCard && state.secondCard);
+}
+
 function handleCardClick(
   event: Event,
   state: GameFieldState,
@@ -136,13 +146,7 @@ function handleCardClick(
 ): void {
   if (state.locked) return;
   const cardRef = (event.target as HTMLElement).closest<HTMLElement>(".card");
-  if (!cardRef) return;
-  if (
-    cardRef.classList.contains("is-flipped") ||
-    cardRef.classList.contains("is-matched") ||
-    (state.firstCard && state.secondCard)
-  )
-    return;
+  if (!cardRef || !isCardClickable(state, cardRef)) return;
 
   revealCard(cardRef);
   if (!state.firstCard) {
@@ -164,6 +168,10 @@ function registerCardClickHandler(
   fieldSectionRef.addEventListener("click", (event) =>
     handleCardClick(event, state, callbacks, totalCards),
   );
+}
+
+function createInitialFieldState(): GameFieldState {
+  return { firstCard: null, secondCard: null, locked: false, matchedCount: 0 };
 }
 
 /**
@@ -190,11 +198,6 @@ export function createGameField(
   const fieldSectionRef = fieldRef.querySelector<HTMLElement>("#field");
   if (!fieldSectionRef) return;
 
-  const state: GameFieldState = {
-    firstCard: null,
-    secondCard: null,
-    locked: false,
-    matchedCount: 0,
-  };
+  const state = createInitialFieldState();
   registerCardClickHandler(fieldSectionRef, state, callbacks, boardSize);
 }

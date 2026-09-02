@@ -107,7 +107,16 @@ function buildGameMarkup(theme: string, startPlayer: Player): string {
   `;
 }
 
-function queryGameElements(gameRef: HTMLElement): GameElements {
+type ScoreElements = Pick<
+  GameElements,
+  "scoreBlueRef" | "scoreOrangeRef" | "currentPlayerIconRef" | "currentPlayerNameRef"
+>;
+type ExitElements = Pick<
+  GameElements,
+  "exitButtonRef" | "exitDialogRef" | "exitCancelRef" | "exitConfirmRef"
+>;
+
+function queryScoreElements(gameRef: HTMLElement): ScoreElements {
   return {
     scoreBlueRef: gameRef.querySelector<HTMLElement>("[data-score-blue]"),
     scoreOrangeRef: gameRef.querySelector<HTMLElement>("[data-score-orange]"),
@@ -117,6 +126,11 @@ function queryGameElements(gameRef: HTMLElement): GameElements {
     currentPlayerNameRef: gameRef.querySelector<HTMLElement>(
       "[data-current-player-name]",
     ),
+  };
+}
+
+function queryExitElements(gameRef: HTMLElement): ExitElements {
+  return {
     exitButtonRef: gameRef.querySelector<HTMLButtonElement>("[data-exit]"),
     exitDialogRef: gameRef.querySelector<HTMLDialogElement>(
       "[data-exit-dialog]",
@@ -130,6 +144,21 @@ function queryGameElements(gameRef: HTMLElement): GameElements {
   };
 }
 
+function queryGameElements(gameRef: HTMLElement): GameElements {
+  return { ...queryScoreElements(gameRef), ...queryExitElements(gameRef) };
+}
+
+function resetCurrentPlayerIconClasses(
+  icon: HTMLImageElement,
+  player: Player,
+): void {
+  icon.alt = player;
+  icon.classList.remove(
+    "game__current-icon--blue",
+    "game__current-icon--orange",
+  );
+}
+
 function updateCurrentPlayerIcon(
   elements: GameElements,
   state: GameState,
@@ -138,11 +167,7 @@ function updateCurrentPlayerIcon(
   const BASE_URL = import.meta.env.BASE_URL;
   const { currentPlayerIconRef, currentPlayerNameRef } = elements;
   if (!currentPlayerIconRef) return;
-  currentPlayerIconRef.alt = state.currentPlayer;
-  currentPlayerIconRef.classList.remove(
-    "game__current-icon--blue",
-    "game__current-icon--orange",
-  );
+  resetCurrentPlayerIconClasses(currentPlayerIconRef, state.currentPlayer);
   if (currentPlayerNameRef)
     currentPlayerNameRef.textContent = PLAYER_NAMES[state.currentPlayer];
 
@@ -209,6 +234,10 @@ function registerGameFieldCallbacks(
   });
 }
 
+function createInitialGameState(startPlayer: Player): GameState {
+  return { scoreBlue: 0, scoreOrange: 0, currentPlayer: startPlayer };
+}
+
 /**
  * Show the game page: header bar (scores, current player, exit) plus the
  * playable card field for the theme/board size/player chosen in Settings.
@@ -224,11 +253,7 @@ export function createGamePage() {
   gameRef.innerHTML = buildGameMarkup(settings.theme, settings.startPlayer);
 
   const elements = queryGameElements(gameRef);
-  const state: GameState = {
-    scoreBlue: 0,
-    scoreOrange: 0,
-    currentPlayer: settings.startPlayer,
-  };
+  const state = createInitialGameState(settings.startPlayer);
 
   updateCurrentPlayerIcon(elements, state, settings.theme);
   registerExitDialogHandlers(elements);

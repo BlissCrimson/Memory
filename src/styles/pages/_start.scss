@@ -5,10 +5,7 @@ body {
   background-color: var(--bg__start);
 }
 
-// justify-content only kicks in when a page's single #app child is shorter
-// than the viewport (e.g. .game, fixed at 875px) - pages whose content
-// already fills #app's height (.settings/.result, both min-height: 100vh)
-// render unchanged.
+// Only affects pages whose #app child is shorter than the viewport (.game).
 #app {
   display: flex;
   flex-direction: column;
@@ -17,11 +14,9 @@ body {
   position: relative;
 }
 
-// Scopes the max-width wrapper's flex behavior to the home page: .container
-// itself stays a plain, reusable max-width utility (_indexLayout.scss). It
-// needs to stretch across #app's full height here so .welcome can center
-// within it and the big background icon (position: absolute) keeps anchoring
-// to the viewport instead of shrinking to .welcome's own content height.
+// Home-page-only: stretches .container to #app's full height so .welcome
+// centers correctly and the absolutely-positioned background icon anchors
+// to the viewport, not just to .welcome's own content height.
 #app > .container {
   display: flex;
   flex-direction: column;
@@ -116,10 +111,8 @@ body {
   gap: fct.px-to-rem(16);
 }
 
-// Kept out of the normal flow so its height never pushes #app past one
-// viewport - that overflow was previously causing .welcome's vertical
-// centering to sit at the top of the page on tall/large viewports instead of
-// staying centered (the visible area was just the top of an over-tall #app).
+// Kept out of the flow so its height never pushes #app past one viewport
+// (that was breaking .welcome's vertical centering on tall viewports).
 #imprint {
   position: absolute;
   right: fct.px-to-rem(24);

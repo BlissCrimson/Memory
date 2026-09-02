@@ -106,12 +106,8 @@
   flex-direction: column;
   align-items: flex-end;
   gap: fct.px-to-rem(24);
-  // Fixed (not content-driven) so the column's own width never changes when
-  // .settings__bar grows/shrinks with a longer/shorter selected label -
-  // without this, the whole .settings row (centered via justify-content)
-  // visibly shifted sideways on every selection. Wide enough for the
-  // longest possible bar content ("DA Projects Theme / Orange Player /
-  // Board-24 Cards", measured ~668px) plus headroom.
+  // Fixed width so the column never shifts .settings sideways when the
+  // bar's content changes; wide enough for the longest bar content (~668px).
   width: fct.px-to-rem(700);
 }
 
@@ -163,11 +159,8 @@
   }
 }
 
-// Groups the 3 labels + 2 separators so they can be centered as a unit in
-// the space left of the Start button, instead of hugging the bar's left
-// edge - flex:1 claims all space not used by the button, and centering
-// happens inside that space, so the group re-centers (not just re-lefts)
-// whenever a label's text length changes.
+// Groups the labels+separators so they center as a unit left of the Start
+// button, re-centering (not just re-lefting) as label text length changes.
 .settings__bar-labels {
   @include mx.flex-row();
   flex: 1 1 auto;

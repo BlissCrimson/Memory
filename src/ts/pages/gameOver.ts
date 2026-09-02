@@ -86,10 +86,8 @@ export function createGameOverPage() {
   registerGameOverAutoContinue(gameOverRef);
 }
 
-// Advances to /result on its own after AUTO_CONTINUE_DELAY_MS (mentor
-// feedback: this used to require a tap). Tapping/pressing Enter still skips
-// ahead immediately; the hasStarted guard keeps whichever trigger fires
-// first from double-navigating.
+// Advances to /result on its own after a delay; tap/Enter still skip ahead
+// immediately (hasStarted guards against both firing).
 function registerGameOverAutoContinue(gameOverRef: HTMLElement): void {
   const continueRef = gameOverRef.querySelector<HTMLElement>("[data-continue]");
   let hasStarted = false;
