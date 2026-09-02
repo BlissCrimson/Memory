@@ -34,7 +34,7 @@ jobs:
       #     publish_dir: ./dist
 
       - name: Deploy to FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTPS_SERVER }}
           username: ${{ secrets.FTPS_USERNAME }}
