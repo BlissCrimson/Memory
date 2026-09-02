@@ -39,7 +39,7 @@
 
 [data-theme="food"] .card {
   width: fct.px-to-rem(122);
-  height: fct.px-to-rem(120);
+  height: fct.px-to-rem(122);
 }
 
 .card__inner {
@@ -90,10 +90,19 @@
   }
 }
 
-[data-theme="games"] .icon__card-back,
-[data-theme="projects"] .icon__card-back,
-[data-theme="food"] .icon__card-back {
+[data-theme="games"] .icon__card-back {
   display: none;
+}
+
+// Design-specified gradients (exact angle/stops from Figma) - these replace
+// the generic --state-card-back-start/-end 2-stop/45deg default per theme
+// only where a design value has actually been provided.
+[data-theme="code"] .card__face--back {
+  background: linear-gradient(212.26deg, #4dd5bc 29.42%, #286f62 123.94%);
+}
+
+[data-theme="games"] .card__face--back {
+  background: linear-gradient(147.13deg, #ed1b76 1.28%, #0a2835 142.53%);
 }
 
 // Food uses a hand-drawn frame image instead of a CSS border-color (unlike
@@ -106,4 +115,17 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   pointer-events: none;
+}
+
+[data-theme="code"] .card.is-matched .card__face--front {
+  border: 5px solid #4dd5bc;
+  box-shadow: 6px 6px 8px 0px #4dd5bc4d;
+}
+
+[data-theme="games"] .card.is-matched .card__face--front {
+  border: 3px solid #ed1b76;
+}
+
+[data-theme="projects"] .card.is-matched .card__face--front {
+  border: 2px solid #1e7594;
 }

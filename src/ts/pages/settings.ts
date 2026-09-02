@@ -129,11 +129,13 @@ function buildSettingsBarMarkup(): string {
   const BASE_URL = import.meta.env.BASE_URL;
   return `
             <div class="settings__bar">
-                <span data-bar-theme>GameTheme</span>
-                <img class="icon icon__entry icon__entry--slash" data-slash-theme src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-                <span data-bar-player>Player</span>
-                <img class="icon icon__entry icon__entry--slash" data-slash-player src="${BASE_URL}assets/icons/slash-line.svg" alt="">
-                <span data-bar-board-size>Board-Size</span>
+                <div class="settings__bar-labels">
+                    <span data-bar-theme>GameTheme</span>
+                    <img class="icon icon__entry icon__entry--slash" data-slash-theme src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                    <span data-bar-player>Player</span>
+                    <img class="icon icon__entry icon__entry--slash" data-slash-player src="${BASE_URL}assets/icons/slash-line.svg" alt="">
+                    <span data-bar-board-size>Board-Size</span>
+                </div>
                 <button class="button button__start" disabled>
                     <img class="icon icon__entry icon__entry--start" src="${BASE_URL}assets/icons/smart_display.svg" alt="">
                     Start

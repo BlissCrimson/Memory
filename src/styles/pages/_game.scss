@@ -218,13 +218,23 @@ body[data-theme] {
 
     // Food replaces the CSS border with a hand-drawn frame image on the
     // header exit button and the dialog's "Back to game" button (unlike
-    // Code/Games/Projects, which use --border-default/a CSS radius).
+    // Code/Games/Projects, which use --border-default/a CSS radius). The
+    // button's own box is sized to match the SVG's native canvas exactly
+    // (176x49 / 214x48) - the auto-sized (padding-driven) button was a
+    // different size, so background-size:100% 100% stretched the drawn
+    // frame off-proportion. The radius on the background-color fill is a
+    // fallback for if the image fails to load; the frame's own rounded
+    // shape otherwise covers it.
     .game__exit {
+      width: fct.px-to-rem(176);
+      height: fct.px-to-rem(49);
+      justify-content: center;
       background: var(--btn-exit-header-bg);
       background-image: url("../../../public/assets/img/themes/food/exit-border.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       border-color: transparent;
+      border-radius: fct.px-to-rem(10);
       color: var(--text-secondary);
 
       &:hover {
@@ -235,11 +245,17 @@ body[data-theme] {
     }
 
     .game__exit-dialog-cancel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fct.px-to-rem(214);
+      height: fct.px-to-rem(48);
       background-color: var(--btn-secondary-bg);
       background-image: url("../../../public/assets/img/themes/food/back-border.svg");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       border-color: transparent;
+      border-radius: fct.px-to-rem(10);
       color: var(--text-tertiary);
 
       &:hover {

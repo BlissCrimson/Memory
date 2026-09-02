@@ -154,28 +154,6 @@
   font-size: fct.px-to-rem(16);
   font-weight: 400;
 
-  // Each label also gets its own fixed-enough min-width + no-wrap, so
-  // swapping "GameTheme" for e.g. "DA Projects Theme" cannot shift the
-  // slash icons or the Start button that follow it.
-  [data-bar-theme],
-  [data-bar-player],
-  [data-bar-board-size] {
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
-
-  [data-bar-theme] {
-    min-width: fct.px-to-rem(190);
-  }
-
-  [data-bar-player] {
-    min-width: fct.px-to-rem(110);
-  }
-
-  [data-bar-board-size] {
-    min-width: fct.px-to-rem(120);
-  }
-
   @include mx.respond(sm) {
     width: 100%;
     height: auto;
@@ -185,13 +163,33 @@
   }
 }
 
+// Groups the 3 labels + 2 separators so they can be centered as a unit in
+// the space left of the Start button, instead of hugging the bar's left
+// edge - flex:1 claims all space not used by the button, and centering
+// happens inside that space, so the group re-centers (not just re-lefts)
+// whenever a label's text length changes.
+.settings__bar-labels {
+  @include mx.flex-row();
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: fct.px-to-rem(16);
+  min-width: 0;
+
+  [data-bar-theme],
+  [data-bar-player],
+  [data-bar-board-size] {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
 .button__start {
   @include mx.flex-row();
   justify-content: center;
   width: fct.px-to-rem(130);
   height: fct.px-to-rem(55);
   gap: fct.px-to-rem(8);
-  margin-left: auto;
+  flex-shrink: 0;
   padding: fct.px-to-rem(12) fct.px-to-rem(20);
   border: none;
   border-radius: 0;
