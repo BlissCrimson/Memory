@@ -14,14 +14,14 @@
 
   // Border
   --border-default: var(--text-primary);
-  --border-shadow: ; // TODO: Wert festlegen
+  --border-shadow: 3px 3px 5px 0px #2f2e2e33;
 
   // Button
   --btn-primary-bg: #bfe5f2;
   --btn-secondary-bg: #fd8a81;
   --btn-tertiary-bg: ; // TODO: Wert festlegen
-  --btn-exit-bg: ; // TODO: Wert festlegen
-  --btn-exit-bg-hover: ; // TODO: Wert festlegen
+  --btn-exit-bg: #fd8a81; 
+  --btn-exit-bg-hover: #ed5b50;
 
   // Game State
   --state-player-blue: var(--text-player-blue);
@@ -33,4 +33,7 @@
   // Fonts
   --font-primary: "Figtree", sans-serif;
   --font-secondary: ; // TODO: Wert festlegen
+
+  // shadow
+  --icon-shadow-exit: 3px 3px 5px 0px #2f2e2e33;
 }

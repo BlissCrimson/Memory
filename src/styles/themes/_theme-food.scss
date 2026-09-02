@@ -13,15 +13,17 @@
   --text-player-orange: #ea6900;
 
   // Border
-  --border-default: var(--text-secondary);
-  --border-shadow: ; // TODO: Wert festlegen
+  --border-default: #00000033;
+  --border-shadow: #2f2e2e33;
 
   // Button
   --btn-primary-bg: #ffab3e;
-  --btn-secondary-bg: ; // TODO: Wert festlegen
-  --btn-tertiary-bg: ; // TODO: Wert festlegen
-  --btn-exit-bg: ; // TODO: Wert festlegen
-  --btn-exit-bg-hover: ; // TODO: Wert festlegen
+  --btn-secondary-bg: #f3832d;
+  --btn-tertiary-bg: #fff9f2;
+  --btn-exit-bg: var(--btn-tertiary-bg);
+  --btn-exit-bg-hover: var(--btn-secondary-bg);
+  --btn-exit-header-bg: var(--btn-tertiary-bg);
+  --btn-exit-header-bg-hover: var(--btn-secondary-bg);
 
   // Game State
   --state-player-blue: var(--text-player-blue);

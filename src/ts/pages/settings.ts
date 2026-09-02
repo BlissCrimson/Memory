@@ -41,7 +41,7 @@ export function createSettingsPage() {
     <section class="settings">
         <div class="settings__form">
             <div class="settings__heading">
-                <h1>Settings</h1>
+                <h2>Settings</h2>
                 <img class="icon__settings--headline" src="${BASE_URL}assets/icons/line-big.svg" alt="">
             </div>
 
@@ -123,7 +123,7 @@ export function createSettingsPage() {
 
         <div class="settings__right">
             <div class="settings__preview" data-theme="code">
-                <img class="img img__preview" data-preview-icon src="${previewImgs["codes"]}" alt="">
+                <img class="img img__preview" data-preview-icon src="${previewImgs["codes"]}" alt="${THEME_LABELS["codes"]} preview">
             </div>
 
             <div class="settings__bar">
@@ -182,7 +182,10 @@ export function createSettingsPage() {
 
   function applyPreview(themeValue: string) {
     previewRef?.setAttribute("data-theme", THEME_MAP[themeValue]);
-    if (previewIconRef) previewIconRef.src = previewImgs[themeValue];
+    if (previewIconRef) {
+      previewIconRef.src = previewImgs[themeValue];
+      previewIconRef.alt = `${THEME_LABELS[themeValue]} preview`;
+    }
   }
 
   function updateStartButtonState() {

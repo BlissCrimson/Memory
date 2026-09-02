@@ -95,3 +95,15 @@
 [data-theme="food"] .icon__card-back {
   display: none;
 }
+
+// Food uses a hand-drawn frame image instead of a CSS border-color (unlike
+// Code/Games/Projects, which rely on --border-default) to mark a matched pair.
+[data-theme="food"] .card.is-matched .card__face--front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../../public/assets/img/themes/food/match-border.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}

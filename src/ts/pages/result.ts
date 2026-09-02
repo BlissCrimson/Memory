@@ -80,7 +80,7 @@ export function createResultPage() {
   const drawTitleAsset = DRAW_TITLE_ASSET[theme];
   const drawTitleMarkup = drawTitleAsset
     ? `<img class="result__title-img" src="${BASE_URL}${drawTitleAsset}" alt="DRAW">`
-    : `<h1 class="result__title result__title--draw">DRAW</h1>`;
+    : `<h2 class="result__title result__title--draw">DRAW</h2>`;
 
   const headlineMarkup = isDraw
     ? `
@@ -89,9 +89,8 @@ export function createResultPage() {
       ${drawTitleMarkup}
     `
     : `
-      ${theme === "code" ? `<div class="result__confetti" aria-hidden="true"></div>` : ""}
       <p class="result__lead">The winner is</p>
-      <h1 class="result__title result__title--winner result__title--${winner}">${PLAYER_LABELS[winner]}</h1>
+      <h2 class="result__title result__title--winner result__title--${winner}">${PLAYER_LABELS[winner]}</h2>
       <div class="result__icon-panel">
         <img class="result__icon result__icon--winner" src="${winnerIconSrc}" alt="${PLAYER_LABELS[winner]}">
       </div>

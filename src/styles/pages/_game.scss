@@ -65,15 +65,147 @@ body[data-theme] {
     font-family: var(--font-primary);
   }
 
+  &[data-theme="code"] {
+    .game__bar {
+      justify-content: center;
+      gap: fct.px-to-rem(48);
+      // Unlike the other 3 themes, Code has no connecting bar background in
+      // the mockup - scores/current player/exit render as 3 separately
+      // floating elements over the page background.
+      background-color: transparent;
+    }
+
+    .game__scores {
+      background-color: var(--bg-surface);
+      color: var(--text-tertiary);
+    }
+
+    // .game__bar's shared color:var(--text-tertiary) is mint for Code
+    // (used elsewhere for accents), not the white "Current player" text
+    // the mockup shows - only Code needs this override, --text-tertiary
+    // is already white on the other 3 themes.
+    .game__current {
+      color: var(--text-primary);
+    }
+
+    .game__current,
+    .game__score {
+      font-size: fct.px-to-rem(26);
+    }
+
+    .game__exit,
+    .game__exit-dialog-cancel {
+      background: var(--btn-exit-header-bg);
+      border-color: var(--border-default);
+      color: var(--border-default);
+      border-radius: 0;
+
+      &:hover {
+        background: var(--btn-exit-header-bg-hover);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-confirm {
+      background: var(--btn-exit-bg);
+      color: var(--text-tertiary);
+      border-radius: 0;
+
+      &:hover {
+        background: var(--btn-exit-bg-hover);
+        filter: none;
+      }
+    }
+  }
+
+  &[data-theme="games"] {
+    // Only Code keeps square exit buttons; Games/Projects use a rounded
+    // 10px corner per mentor feedback, Food gets its own image-border
+    // treatment further down instead of a CSS radius.
+    .game__exit,
+    .game__exit-dialog-cancel,
+    .game__exit-dialog-confirm {
+      border-radius: fct.px-to-rem(10);
+    }
+
+    .game__exit {
+      background: var(--btn-exit-header-bg);
+      border-color: var(--border-default);
+      color: var(--border-default);
+
+      &:hover {
+        background: var(--btn-exit-header-bg-hover);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-cancel {
+      background: var(--border-default);
+      border-color: var(--border-default);
+      color: var(--text-tertiary);
+
+      &:hover {
+        background: transparent;
+        border-color: var(--border-default);
+        color: var(--border-default);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-confirm {
+      background: var(--btn-exit-bg);
+      color: var(--text-tertiary);
+
+      &:hover {
+        background: var(--btn-exit-bg-hover);
+        filter: none;
+      }
+    }
+  }
+
   &[data-theme="projects"] {
     .game__bar {
       color: var(--text-primary);
+    }
+
+    .game__exit,
+    .game__exit-dialog-cancel,
+    .game__exit-dialog-confirm {
+      border-radius: fct.px-to-rem(10);
     }
 
     .game__exit {
       border-color: transparent;
       background-color: var(--btn-primary-bg);
       color: var(--text-primary);
+
+      &:hover {
+        background-color: var(--text-primary);
+        color: var(--text-tertiary);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-cancel {
+      background: var(--btn-primary-bg);
+      border-color: transparent;
+      color: var(--text-primary);
+
+      &:hover {
+        background: var(--text-primary);
+        color: var(--text-tertiary);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-confirm {
+      background: var(--btn-exit-bg);
+      color: var(--text-tertiary);
+
+      &:hover {
+        background: var(--btn-exit-bg-hover);
+        filter: none;
+      }
     }
   }
 
@@ -82,6 +214,48 @@ body[data-theme] {
     .game__exit-dialog-cancel,
     .game__exit-dialog-confirm {
       font-family: var(--font-secondary);
+    }
+
+    // Food replaces the CSS border with a hand-drawn frame image on the
+    // header exit button and the dialog's "Back to game" button (unlike
+    // Code/Games/Projects, which use --border-default/a CSS radius).
+    .game__exit {
+      background: var(--btn-exit-header-bg);
+      background-image: url("../../../public/assets/img/themes/food/exit-border.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border-color: transparent;
+      color: var(--text-secondary);
+
+      &:hover {
+        background-color: var(--btn-exit-header-bg-hover);
+        color: var(--text-tertiary);
+        filter: none;
+      }
+    }
+
+    .game__exit-dialog-cancel {
+      background-color: var(--btn-secondary-bg);
+      background-image: url("../../../public/assets/img/themes/food/back-border.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border-color: transparent;
+      color: var(--text-tertiary);
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+    }
+
+    .game__exit-dialog-confirm {
+      background: var(--btn-exit-bg);
+      color: var(--text-secondary);
+
+      &:hover {
+        background: var(--btn-exit-bg-hover);
+        color: var(--text-tertiary);
+        filter: none;
+      }
     }
   }
 
@@ -140,9 +314,12 @@ body[data-theme] {
   }
 
   &__exit {
+    display: inline-flex;
+    align-items: center;
+    gap: fct.px-to-rem(8);
     padding: fct.px-to-rem(10) fct.px-to-rem(18);
     border: 2px solid var(--border-default, currentColor);
-    border-radius: fct.px-to-rem(8);
+    border-radius: 0;
     background: transparent;
     color: inherit;
     font-family: inherit;
@@ -154,6 +331,25 @@ body[data-theme] {
     &:hover {
       filter: brightness(1.15);
     }
+  }
+
+  &__exit-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: fct.px-to-rem(20);
+    height: fct.px-to-rem(20);
+    // logout.svg has a hardcoded fill (not currentColor) - used as a CSS
+    // mask instead of an <img> so it always matches the button's own text
+    // color across every theme/state.
+    background-color: currentColor;
+    mask-image: url("../../../public/assets/icons/logout.svg");
+    -webkit-mask-image: url("../../../public/assets/icons/logout.svg");
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    mask-position: center;
+    -webkit-mask-position: center;
   }
 
   &__score {
@@ -194,7 +390,7 @@ body[data-theme] {
     gap: fct.px-to-rem(24);
     padding: fct.px-to-rem(32);
     border: none;
-    border-radius: fct.px-to-rem(8);
+    border-radius: 0;
     background-color: var(--bg-dialog-field);
     // var(--text-tertiary) is white on games/projects/food, unreadable on
     // this light dialog background - use the same literal dark color the
@@ -224,7 +420,7 @@ body[data-theme] {
     &-cancel,
     &-confirm {
       padding: fct.px-to-rem(10) fct.px-to-rem(18);
-      border-radius: fct.px-to-rem(8);
+      border-radius: 0;
       font-family: inherit;
       font-weight: 700;
       font-size: fct.px-to-rem(16);
@@ -244,8 +440,7 @@ body[data-theme] {
 
     &-confirm {
       border: none;
-      background-color: var(--button-bg);
-      color: var(--text-button);
+      // Colors are set per theme below (&[data-theme="..."] blocks).
     }
   }
 }

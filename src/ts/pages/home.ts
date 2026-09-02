@@ -17,13 +17,13 @@ export function createHomePage() {
             <h1>Ready to play?</h1>
             <button class="button button__entry">
                 <span class="button__entry-label">
-                    <img class="icon icon__entry icon__entry--button" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="controller">
+                    <img class="icon icon__entry icon__entry--button" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="">
                     <p>Play</p>
                 </span>
-                <img class="icon icon__entry icon__entry--arrow" src="${BASE_URL}assets/icons/arrow.svg" alt="arrow">
+                <img class="icon icon__entry icon__entry--arrow" src="${BASE_URL}assets/icons/arrow.svg" alt="">
             </button>
         </section>
-        <img class="icon icon__entry icon__entry--big" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="controller">
+        <img class="icon icon__entry icon__entry--big" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="">
         <footer id="imprint"></footer>
       `;
   createFooter();

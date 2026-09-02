@@ -10,11 +10,13 @@ body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
 }
 
 .welcome {
-  @include mx.column-center();
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
@@ -24,7 +26,7 @@ body {
   margin-inline: auto;
   gap: fct.px-to-rem(32);
   color: var(--text-start);
-  text-align: center;
+  text-align: left;
 
   &__intro {
     color: var(--text-start-muted);
@@ -56,6 +58,12 @@ body {
       font-size: fct.px-to-rem(90);
     }
   }
+
+  // Headline/intro stay left-aligned (mentor feedback), but the Play button
+  // itself keeps its own horizontal centering per the design mockup.
+  .button__entry {
+    align-self: center;
+  }
 }
 
 .button__entry {
@@ -66,7 +74,7 @@ body {
   margin-top: fct.px-to-rem(32);
   padding: fct.px-to-rem(16) fct.px-to-rem(24);
   border: none;
-  border-radius: fct.px-to-rem(16);
+  border-radius: 0;
   background-color: var(--button-bg);
   color: var(--text-button);
   font-family: "Red Rose", serif;

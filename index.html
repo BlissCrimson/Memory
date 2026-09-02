@@ -5,7 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory</title>
-    <link rel="shortcut icon" href="./public/assets/img/themes/projects/preview.svg" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/stadia_controller.svg">
+    <script>
+        // GitHub Pages has no SPA history-API fallback: a hard reload/direct
+        // link on e.g. /memory/game 404s before this app ever loads. 404.html
+        // (at the site root) redirects here with the real path encoded in
+        // `?/path`; restore it via history.replaceState before the router boots.
+        // Pattern: https://github.com/rafgraph/spa-github-pages
+        (function (l) {
+            if (l.search[1] === "/") {
+                var decoded = l.search
+                    .slice(1)
+                    .split("&")
+                    .map(function (s) {
+                        return s.replace(/~and~/g, "&");
+                    });
+                window.history.replaceState(
+                    null,
+                    "",
+                    l.pathname.slice(0, -1) + decoded.shift() + (decoded.length ? "?" + decoded.join("&") : "") + l.hash,
+                );
+            }
+        })(window.location);
+    </script>
 </head>
 
 <body>

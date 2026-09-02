@@ -11,6 +11,7 @@
   --text-tertiary: #ffffff;
   --text-player-blue: #097fc5;
   --text-player-orange: #ea6900;
+  --text-btn-back: #ed1b76;
 
   // Border
   --border-default: #e71c4f;
@@ -22,6 +23,8 @@
   --btn-tertiary-bg: var(--text-tertiary);
   --btn-exit-bg: #394b61;
   --btn-exit-bg-hover: #444862;
+  --btn-exit-header-bg: #394b61;
+  --btn-exit-header-bg-hover: #444862;
 
   // Game State
   --state-player-blue: var(--text-player-blue);

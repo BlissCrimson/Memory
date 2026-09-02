@@ -208,7 +208,12 @@ export function createGameField(
       secondCard = null;
       locked = false;
       callbacks.onMatch();
-      if (matchedCount === boardSize) callbacks.onGameEnd();
+      // Delay by the card flip transition duration (.card__inner in
+      // _card.scss: transition: transform 0.4s ease) so the last card is
+      // visibly finished flipping before navigating away on game end.
+      if (matchedCount === boardSize) {
+        setTimeout(() => callbacks.onGameEnd(), 400);
+      }
     } else {
       setTimeout(() => {
         firstCard?.classList.remove("is-flipped");

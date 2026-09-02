@@ -2,6 +2,8 @@ import { createHomePage } from "./ts/pages/home";
 import { createSettingsPage } from "./ts/pages/settings";
 import { createGamePage } from "./ts/pages/game";
 import { createResultPage } from "./ts/pages/result";
+import { createGameOverPage } from "./ts/pages/gameOver";
+import { createImprintPage } from "./ts/pages/imprint";
 import { createErrorPage } from "./ts/pages/404";
 
 type RouteHandler = (...params: string[]) => unknown;
@@ -10,7 +12,9 @@ const routes: Record<string, RouteHandler> = {
   "/": createHomePage,
   "/settings": createSettingsPage,
   "/game": createGamePage,
+  "/game-over": createGameOverPage,
   "/result": createResultPage,
+  "/imprint": createImprintPage,
   "/404": createErrorPage,
 };
 

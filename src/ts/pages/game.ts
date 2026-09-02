@@ -9,6 +9,14 @@ const THEME_MAP: Record<string, string> = {
   food: "food",
 };
 
+/** Code shows arrow/flag player icons for the score badges; the other themes show plain pawn icons (same distinction as gameOver.ts/result.ts). */
+const SCORE_ICON: Record<string, string> = {
+  code: "assets/icons/player-{player}.svg",
+  games: "assets/icons/chess_pawn-{player}.svg",
+  projects: "assets/icons/chess_pawn-{player}.svg",
+  food: "assets/icons/chess_pawn-{player}.svg",
+};
+
 /**
  * Show the game page: header bar (scores, current player, exit) plus the
  * playable card field for the theme/board size/player chosen in Settings.
@@ -30,24 +38,38 @@ export function createGamePage() {
 
   document.body.dataset.theme = theme;
 
+  const blueIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "blue")}`;
+  const orangeIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "orange")}`;
+
+  const scoreMarkup = (color: "blue" | "orange", iconSrc: string) => `
+                <span class="game__score game__score--${color}">
+                    <img src="${iconSrc}" alt="${color === "blue" ? "Blue" : "Orange"}">
+                    <span data-score-${color}>0</span>
+                </span>
+  `;
+
+  // Mockups order the score badges differently per theme: Code shows Blue
+  // before Orange, the other 3 themes show Orange before Blue (same
+  // distinction as gameOver.ts/result.ts).
+  const scoresMarkup =
+    theme === "code"
+      ? scoreMarkup("blue", blueIconSrc) + scoreMarkup("orange", orangeIconSrc)
+      : scoreMarkup("orange", orangeIconSrc) + scoreMarkup("blue", blueIconSrc);
+
   gameRef.innerHTML = `
     <div class="game" data-theme="${theme}">
         <div class="game__bar">
             <div class="game__scores">
-                <span class="game__score game__score--blue">
-                    <img src="${BASE_URL}assets/icons/chess_pawn-blue.svg" alt="Blue">
-                    <span data-score-blue>0</span>
-                </span>
-                <span class="game__score game__score--orange">
-                    <img src="${BASE_URL}assets/icons/chess_pawn-orange.svg" alt="Orange">
-                    <span data-score-orange>0</span>
-                </span>
+                ${scoresMarkup}
             </div>
             <p class="game__current">
                 Current player:
                 <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
             </p>
-            <button class="button button__${theme} button__${theme}--exit game__exit" data-exit>Exit game</button>
+            <button class="button button__${theme} button__${theme}--exit game__exit" data-exit>
+                <span class="game__exit-icon" aria-hidden="true"></span>
+                Exit game
+            </button>
         </div>
         <div id="gameField"></div>
 
@@ -129,7 +151,7 @@ export function createGamePage() {
         "memory:result",
         JSON.stringify({ blue: scoreBlue, orange: scoreOrange }),
       );
-      navigate("/result");
+      navigate("/game-over");
     },
   });
 }

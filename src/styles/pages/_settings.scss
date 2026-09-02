@@ -4,6 +4,7 @@
 .settings {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: flex-start;
   gap: fct.px-to-rem(48);
   min-height: 100vh;
@@ -16,17 +17,13 @@
     padding: fct.px-to-rem(16);
     gap: fct.px-to-rem(24);
   }
-
-  @include mx.respond-min(xl) {
-    justify-content: center;
-  }
 }
 
 .settings__form {
   display: flex;
   flex-direction: column;
   gap: fct.px-to-rem(32);
-  flex: 1 1 320px;
+  flex: 0 1 320px;
 }
 
 .settings__heading {
@@ -34,7 +31,7 @@
   flex-direction: column;
   gap: fct.px-to-rem(4);
 
-  h1 {
+  h2 {
     font-family: "Red Rose", sans-serif;
     font-weight: 700;
     font-size: fct.px-to-rem(54);
@@ -100,15 +97,28 @@
   }
 }
 
+.settings__option:hover .icon__entry--connector {
+  opacity: 1;
+}
+
 .settings__right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: fct.px-to-rem(24);
+  // Fixed (not content-driven) so the column's own width never changes when
+  // .settings__bar grows/shrinks with a longer/shorter selected label -
+  // without this, the whole .settings row (centered via justify-content)
+  // visibly shifted sideways on every selection. Wide enough for the
+  // longest possible bar content ("DA Projects Theme / Orange Player /
+  // Board-24 Cards", measured ~668px) plus headroom.
+  width: fct.px-to-rem(700);
 }
 
 .settings__preview {
-  margin-top: fct.px-to-rem(150);
+  // Sized so the bar below ends up flush with the bottom of the option
+  // list on the left (per the design mockup).
+  margin-top: fct.px-to-rem(26);
 
   &[data-theme="projects"] {
     background-color: var(--btn-primary-bg);
@@ -132,7 +142,12 @@
 
 .settings__bar {
   @include mx.flex-row();
-  width: fct.px-to-rem(580);
+  // Hugs its own content (grows/shrinks with the selected label), but sits
+  // inside the now fixed-width .settings__right, right-aligned via that
+  // parent's align-items:flex-end - so only the bar's left edge moves, the
+  // page layout around it stays put.
+  width: fit-content;
+  min-width: fct.px-to-rem(580);
   height: fct.px-to-rem(80);
   flex-wrap: nowrap;
   gap: fct.px-to-rem(16);
@@ -145,17 +160,7 @@
   [data-bar-theme],
   [data-bar-player],
   [data-bar-board-size] {
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  @include mx.respond(sm) {
-    max-width: 100%;
-    padding: fct.px-to-rem(12);
-    gap: fct.px-to-rem(8);
+    flex: 0 0 auto;
   }
 }
 
@@ -168,7 +173,7 @@
   margin-left: auto;
   padding: fct.px-to-rem(12) fct.px-to-rem(20);
   border: none;
-  border-radius: fct.px-to-rem(8);
+  border-radius: 0;
   background-color: var(--button-bg);
   color: var(--text-button);
   font-family: "Red Rose", sans-serif;

@@ -1,6 +1,16 @@
 @use "../abstract/mixin" as mx;
 @use "../abstract/functions" as fct;
 
+@keyframes result-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .result {
   @include mx.flex-center();
   position: relative;
@@ -11,6 +21,7 @@
   color: var(--text-tertiary);
   font-family: "Figtree", sans-serif;
   text-align: center;
+  animation: result-fade-in 0.3s ease;
 }
 
 .result__confetti {
@@ -110,7 +121,7 @@
   z-index: 1;
   padding: fct.px-to-rem(12) fct.px-to-rem(24);
   border: 2px solid transparent;
-  border-radius: fct.px-to-rem(8);
+  border-radius: 0;
   font-family: "Red Rose", sans-serif;
   font-weight: 700;
   font-size: fct.px-to-rem(16);

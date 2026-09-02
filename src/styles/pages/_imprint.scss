@@ -1,0 +1,46 @@
+@use "../abstract/mixin" as mx;
+@use "../abstract/functions" as fct;
+
+body {
+  background-color: var(--bg__start);
+}
+
+.imprint {
+  @include mx.column-center();
+  align-items: flex-start;
+  gap: fct.px-to-rem(8);
+  max-width: fct.px-to-rem(720);
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: fct.px-to-rem(80) fct.px-to-rem(24);
+  color: var(--text-start);
+  font-family: "Figtree", sans-serif;
+  text-align: left;
+
+  h2 {
+    margin-bottom: fct.px-to-rem(16);
+    font-family: "Red Rose", serif;
+    font-weight: 700;
+    font-size: fct.px-to-rem(40);
+  }
+
+  h3 {
+    margin-top: fct.px-to-rem(16);
+    font-weight: 700;
+    font-size: fct.px-to-rem(20);
+  }
+
+  > p {
+    color: var(--text-start-muted);
+  }
+
+  .button__entry {
+    width: auto;
+    height: auto;
+    gap: fct.px-to-rem(12);
+    margin-top: fct.px-to-rem(32);
+    padding: fct.px-to-rem(16) fct.px-to-rem(24);
+    font-size: fct.px-to-rem(20);
+    white-space: nowrap;
+  }
+}
