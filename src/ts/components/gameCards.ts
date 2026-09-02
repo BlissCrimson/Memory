@@ -1,4 +1,5 @@
 import { createErrorPage } from "../pages/404";
+import { THEME_ASSET_FOLDERS, THEME_ASSET_FILES } from "../data/themeAssets";
 
 export type Player = "blue" | "orange";
 
@@ -8,95 +9,18 @@ export interface GameFieldCallbacks {
   onGameEnd: () => void;
 }
 
-const THEME_ASSET_FOLDERS: Record<string, string> = {
-  codes: "code",
-  gaming: "gaming",
-  "da-projects": "projects",
-  food: "food",
-};
+interface DeckData {
+  deck: number[];
+  pairImages: string[];
+}
 
-const THEME_ASSET_FILES: Record<string, string[]> = {
-  code: [
-    "logo-ts.svg",
-    "logo-js.svg",
-    "logo-html.svg",
-    "logo-vscode.svg",
-    "logo-django.svg",
-    "logo-css.svg",
-    "logo-angular.svg",
-    "logo-cli.svg",
-    "logo-python.svg",
-    "logo-github.svg",
-    "logo-nodejs.svg",
-    "logo-bootstrap.svg",
-    "logo-react.svg",
-    "logo-sql.svg",
-    "logo-vuejs.svg",
-    "logo-sass.svg",
-    "logo-firebase.svg",
-    "logo-git.svg",
-  ],
-  gaming: [
-    "card-01.svg",
-    "card-02.svg",
-    "card-03.svg",
-    "card-04.svg",
-    "card-05.svg",
-    "card-06.svg",
-    "card-07.svg",
-    "card-08.svg",
-    "card-09.svg",
-    "card-10.svg",
-    "card-11.svg",
-    "card-12.svg",
-    "card-13.svg",
-    "card-14.svg",
-    "card-15.svg",
-    "card-16.svg",
-    "card-17.svg",
-  ],
-  projects: [
-    "card-01.svg",
-    "card-02.svg",
-    "sakura-flower.svg",
-    "card-03.svg",
-    "card-04.svg",
-    "card-05.svg",
-    "basket.svg",
-    "pokeball.svg",
-    "tictactoe.svg",
-    "card-06.svg",
-    "card-07.svg",
-    "card-08.svg",
-    "sombrero.svg",
-    "card-09.svg",
-    "card-10.svg",
-    "card-11.svg",
-  ],
-  food: [
-    "card-01.svg",
-    "card-02.svg",
-    "card-03.svg",
-    "card-04.svg",
-    "card-05.svg",
-    "card-06.svg",
-    "card-07.svg",
-    "card-08.svg",
-    "card-09.svg",
-    "card-10.svg",
-    "card-11.svg",
-    "card-12.svg",
-    "card-13.svg",
-    "card-14.svg",
-    "card-15.svg",
-    "card-16.svg",
-    "card-17.svg",
-  ],
-};
+interface GameFieldState {
+  firstCard: HTMLElement | null;
+  secondCard: HTMLElement | null;
+  locked: boolean;
+  matchedCount: number;
+}
 
-/**
- * Shuffles an array using the Fisher-Yates algorithm (does not mutate the input).
- */
 function shuffle<T>(items: T[]): T[] {
   const array = [...items];
   for (let i = array.length - 1; i > 0; i--) {
@@ -106,10 +30,7 @@ function shuffle<T>(items: T[]): T[] {
   return array;
 }
 
-/**
- * Builds one image URL per card pair for the given theme.
- * Themes with fewer unique images than pairs reuse images (wrap around via modulo).
- */
+// Themes with fewer unique images than pairs reuse images (wrap around via modulo).
 function getPairImages(pairCount: number, themeValue: string): string[] {
   const BASE_URL = import.meta.env.BASE_URL;
   const folder =
@@ -122,33 +43,17 @@ function getPairImages(pairCount: number, themeValue: string): string[] {
   );
 }
 
-/**
- * Create the memory field for the selected board size and theme, and wire up
- * the flip/match game logic. Score and turn state stay owned by the caller
- * and are reported back through the callbacks.
- *
- * @param boardSize
- * @param themeValue - raw settings theme value (e.g. "codes")
- * @param callbacks
- * @returns {void}
- */
-export function createGameField(
-  boardSize: 16 | 24 | 36 = 16,
-  themeValue: string = "codes",
-  callbacks: GameFieldCallbacks,
-) {
-  const fieldRef = document.querySelector<HTMLElement>("#gameField");
-  if (!fieldRef) return createErrorPage();
-  const BASE_URL = import.meta.env.BASE_URL;
-
+function buildDeck(boardSize: number, themeValue: string): DeckData {
   const pairCount = boardSize / 2;
   const pairImages = getPairImages(pairCount, themeValue);
   const pairIds = Array.from({ length: pairCount }, (_, i) => i);
   const deck = shuffle([...pairIds, ...pairIds]);
+  return { deck, pairImages };
+}
 
-  const cards = deck
-    .map(
-      (pairId) => `
+function buildCardMarkup(pairId: number, pairImages: string[]): string {
+  const BASE_URL = import.meta.env.BASE_URL;
+  return `
         <button class="card" data-pair-id="${pairId}">
             <div class="card__inner">
                 <div class="card__face card__face--front">
@@ -159,70 +64,137 @@ export function createGameField(
                 </div>
             </div>
         </button>
-    `,
-    )
-    .join("");
+    `;
+}
 
-  fieldRef.innerHTML = `
+function buildGameFieldMarkup(deckData: DeckData, boardSize: number): string {
+  const cards = deckData.deck
+    .map((pairId) => buildCardMarkup(pairId, deckData.pairImages))
+    .join("");
+  return `
     <section id="field" class="field field--${boardSize}">
         ${cards}
     </section>
   `;
+}
+
+function revealCard(card: HTMLElement): void {
+  card.classList.add("is-flipped");
+}
+
+function handleMatch(
+  state: GameFieldState,
+  callbacks: GameFieldCallbacks,
+  totalCards: number,
+): void {
+  state.firstCard?.classList.add("is-matched");
+  state.secondCard?.classList.add("is-matched");
+  state.matchedCount += 2;
+  state.firstCard = null;
+  state.secondCard = null;
+  state.locked = false;
+  callbacks.onMatch();
+  // Delay by the card flip transition duration (.card__inner in _card.scss:
+  // transition: transform 0.4s ease) so the last card is visibly finished
+  // flipping before navigating away on game end.
+  if (state.matchedCount === totalCards) {
+    setTimeout(() => callbacks.onGameEnd(), 400);
+  }
+}
+
+function scheduleMismatchReset(
+  state: GameFieldState,
+  callbacks: GameFieldCallbacks,
+): void {
+  setTimeout(() => {
+    state.firstCard?.classList.remove("is-flipped");
+    state.secondCard?.classList.remove("is-flipped");
+    state.firstCard = null;
+    state.secondCard = null;
+    state.locked = false;
+    callbacks.onMismatch();
+  }, 900);
+}
+
+function evaluateCardPair(
+  state: GameFieldState,
+  callbacks: GameFieldCallbacks,
+  totalCards: number,
+): void {
+  if (state.firstCard?.dataset.pairId === state.secondCard?.dataset.pairId) {
+    handleMatch(state, callbacks, totalCards);
+  } else {
+    scheduleMismatchReset(state, callbacks);
+  }
+}
+
+function handleCardClick(
+  event: Event,
+  state: GameFieldState,
+  callbacks: GameFieldCallbacks,
+  totalCards: number,
+): void {
+  if (state.locked) return;
+  const cardRef = (event.target as HTMLElement).closest<HTMLElement>(".card");
+  if (!cardRef) return;
+  if (
+    cardRef.classList.contains("is-flipped") ||
+    cardRef.classList.contains("is-matched") ||
+    (state.firstCard && state.secondCard)
+  )
+    return;
+
+  revealCard(cardRef);
+  if (!state.firstCard) {
+    state.firstCard = cardRef;
+    return;
+  }
+
+  state.secondCard = cardRef;
+  state.locked = true;
+  evaluateCardPair(state, callbacks, totalCards);
+}
+
+function registerCardClickHandler(
+  fieldSectionRef: HTMLElement,
+  state: GameFieldState,
+  callbacks: GameFieldCallbacks,
+  totalCards: number,
+): void {
+  fieldSectionRef.addEventListener("click", (event) =>
+    handleCardClick(event, state, callbacks, totalCards),
+  );
+}
+
+/**
+ * Create the memory field for the selected board size and theme, and wire up
+ * the flip/match game logic. Score and turn state stay owned by the caller
+ * and are reported back through the callbacks.
+ *
+ * @param boardSize - number of cards on the board (16, 24 or 36)
+ * @param themeValue - raw settings theme value (e.g. "codes")
+ * @param callbacks - hooks the caller uses to react to match/mismatch/game-end events
+ * @returns {void}
+ */
+export function createGameField(
+  boardSize: 16 | 24 | 36 = 16,
+  themeValue: string = "codes",
+  callbacks: GameFieldCallbacks,
+) {
+  const fieldRef = document.querySelector<HTMLElement>("#gameField");
+  if (!fieldRef) return createErrorPage();
+
+  const deckData = buildDeck(boardSize, themeValue);
+  fieldRef.innerHTML = buildGameFieldMarkup(deckData, boardSize);
 
   const fieldSectionRef = fieldRef.querySelector<HTMLElement>("#field");
   if (!fieldSectionRef) return;
 
-  let firstCard: HTMLElement | null = null;
-  let secondCard: HTMLElement | null = null;
-  let locked = false;
-  let matchedCount = 0;
-
-  fieldSectionRef.addEventListener("click", (event) => {
-    if (locked) return;
-    const cardRef = (event.target as HTMLElement).closest<HTMLElement>(
-      ".card",
-    );
-    if (!cardRef) return;
-    if (
-      cardRef.classList.contains("is-flipped") ||
-      cardRef.classList.contains("is-matched")
-    )
-      return;
-    if (firstCard && secondCard) return;
-
-    cardRef.classList.add("is-flipped");
-
-    if (!firstCard) {
-      firstCard = cardRef;
-      return;
-    }
-
-    secondCard = cardRef;
-    locked = true;
-
-    if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
-      firstCard.classList.add("is-matched");
-      secondCard.classList.add("is-matched");
-      matchedCount += 2;
-      firstCard = null;
-      secondCard = null;
-      locked = false;
-      callbacks.onMatch();
-      // Delay by the card flip transition duration (.card__inner in
-      // _card.scss: transition: transform 0.4s ease) so the last card is
-      // visibly finished flipping before navigating away on game end.
-      if (matchedCount === boardSize) {
-        setTimeout(() => callbacks.onGameEnd(), 400);
-      }
-    } else {
-      setTimeout(() => {
-        firstCard?.classList.remove("is-flipped");
-        secondCard?.classList.remove("is-flipped");
-        firstCard = null;
-        secondCard = null;
-        locked = false;
-        callbacks.onMismatch();
-      }, 900);
-    }
-  });
+  const state: GameFieldState = {
+    firstCard: null,
+    secondCard: null,
+    locked: false,
+    matchedCount: 0,
+  };
+  registerCardClickHandler(fieldSectionRef, state, callbacks, boardSize);
 }

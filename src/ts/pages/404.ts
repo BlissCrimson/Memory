@@ -1,21 +1,11 @@
 import { navigate } from "../../router";
 
-/**
- * Show the error page.
- *
- * This does not rely on "#app" being present, since it is also used as a
- * fallback when "#app" itself could not be found (e.g. on imprint.html).
- * It writes directly into the body and recreates "#app" so subsequent
- * navigation keeps working.
- *
- * @returns {void}
- */
-export function createErrorPage() {
+// Inline styles duplicate the core _404.scss values (centered layout,
+// background/text colors) as a fallback in case the SCSS bundle fails to
+// load - the page stays readable/centered either way.
+function buildErrorPageMarkup(): string {
   const BASE_URL = import.meta.env.BASE_URL;
-  // Inline styles duplicate the core _404.scss values (centered layout,
-  // background/text colors) as a fallback in case the SCSS bundle fails to
-  // load - the page stays readable/centered either way.
-  document.body.innerHTML = `
+  return `
     <div id="app" style="min-height:100vh;">
       <section class="error" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:100vh;background:#303131;color:#ffffff;text-align:center;font-family:sans-serif;">
           <h2 style="margin:0;font-size:72px;">404</h2>
@@ -28,6 +18,24 @@ export function createErrorPage() {
       <img class="icon icon__entry icon__entry--big" src="${BASE_URL}assets/icons/stadia_controller.svg" alt="controller">
     </div>
   `;
+}
+
+function registerErrorPageBackLink(): void {
   const backButtonRef = document.querySelector(".error .button__entry");
   backButtonRef?.addEventListener("click", () => navigate("/"));
+}
+
+/**
+ * Show the error page.
+ *
+ * This does not rely on "#app" being present, since it is also used as a
+ * fallback when "#app" itself could not be found (e.g. on imprint.html).
+ * It writes directly into the body and recreates "#app" so subsequent
+ * navigation keeps working.
+ *
+ * @returns {void}
+ */
+export function createErrorPage() {
+  document.body.innerHTML = buildErrorPageMarkup();
+  registerErrorPageBackLink();
 }

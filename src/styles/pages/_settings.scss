@@ -142,12 +142,9 @@
 
 .settings__bar {
   @include mx.flex-row();
-  // Hugs its own content (grows/shrinks with the selected label), but sits
-  // inside the now fixed-width .settings__right, right-aligned via that
-  // parent's align-items:flex-end - so only the bar's left edge moves, the
-  // page layout around it stays put.
-  width: fit-content;
-  min-width: fct.px-to-rem(580);
+  // Fixed width (not fit-content) so the bar - and the Start button after it
+  // - never resizes when a label changes to a shorter/longer selected value.
+  width: fct.px-to-rem(660);
   height: fct.px-to-rem(80);
   flex-wrap: nowrap;
   gap: fct.px-to-rem(16);
@@ -157,10 +154,34 @@
   font-size: fct.px-to-rem(16);
   font-weight: 400;
 
+  // Each label also gets its own fixed-enough min-width + no-wrap, so
+  // swapping "GameTheme" for e.g. "DA Projects Theme" cannot shift the
+  // slash icons or the Start button that follow it.
   [data-bar-theme],
   [data-bar-player],
   [data-bar-board-size] {
     flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  [data-bar-theme] {
+    min-width: fct.px-to-rem(190);
+  }
+
+  [data-bar-player] {
+    min-width: fct.px-to-rem(110);
+  }
+
+  [data-bar-board-size] {
+    min-width: fct.px-to-rem(120);
+  }
+
+  @include mx.respond(sm) {
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    padding: fct.px-to-rem(12) fct.px-to-rem(16);
+    gap: fct.px-to-rem(8);
   }
 }
 
