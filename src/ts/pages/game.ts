@@ -17,11 +17,6 @@ const SCORE_ICON: Record<string, string> = {
   food: "assets/icons/chess_pawn-{player}.svg",
 };
 
-const PLAYER_NAMES: Record<Player, string> = {
-  blue: "Blue",
-  orange: "Orange",
-};
-
 interface GameSettings {
   themeValue: string;
   theme: string;
@@ -33,7 +28,6 @@ interface GameElements {
   scoreBlueRef: HTMLElement | null;
   scoreOrangeRef: HTMLElement | null;
   currentPlayerIconRef: HTMLImageElement | null;
-  currentPlayerNameRef: HTMLElement | null;
   exitButtonRef: HTMLButtonElement | null;
   exitDialogRef: HTMLDialogElement | null;
   exitCancelRef: HTMLButtonElement | null;
@@ -56,10 +50,21 @@ function readGameSettings(): GameSettings {
   return { themeValue, theme: THEME_MAP[themeValue] ?? "code", startPlayer, boardSize };
 }
 
-function scoreMarkup(color: "blue" | "orange", iconSrc: string): string {
+// Code additionally shows a "Blue"/"Orange" text label (same distinction as
+// gameOver.ts/result.ts); the other themes rely on the icon color alone.
+function scoreMarkup(
+  theme: string,
+  color: "blue" | "orange",
+  iconSrc: string,
+): string {
+  const label =
+    theme === "code"
+      ? `<span class="game__score-label">${color === "blue" ? "Blue" : "Orange"}</span>`
+      : "";
   return `
                 <span class="game__score game__score--${color}">
                     <img src="${iconSrc}" alt="${color === "blue" ? "Blue" : "Orange"}">
+                    ${label}
                     <span data-score-${color}>0</span>
                 </span>
   `;
@@ -73,8 +78,10 @@ function buildScoresMarkup(theme: string): string {
   const blueIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "blue")}`;
   const orangeIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "orange")}`;
   return theme === "code"
-    ? scoreMarkup("blue", blueIconSrc) + scoreMarkup("orange", orangeIconSrc)
-    : scoreMarkup("orange", orangeIconSrc) + scoreMarkup("blue", blueIconSrc);
+    ? scoreMarkup(theme, "blue", blueIconSrc) +
+        scoreMarkup(theme, "orange", orangeIconSrc)
+    : scoreMarkup(theme, "orange", orangeIconSrc) +
+        scoreMarkup(theme, "blue", blueIconSrc);
 }
 
 function buildGameMarkup(theme: string, startPlayer: Player): string {
@@ -87,7 +94,6 @@ function buildGameMarkup(theme: string, startPlayer: Player): string {
             <p class="game__current">
                 Current player:
                 <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
-                <span class="game__current-name" data-current-player-name></span>
             </p>
             <button class="button button__${theme} button__${theme}--exit game__exit" data-exit>
                 <span class="game__exit-icon" aria-hidden="true"></span>
@@ -109,7 +115,7 @@ function buildGameMarkup(theme: string, startPlayer: Player): string {
 
 type ScoreElements = Pick<
   GameElements,
-  "scoreBlueRef" | "scoreOrangeRef" | "currentPlayerIconRef" | "currentPlayerNameRef"
+  "scoreBlueRef" | "scoreOrangeRef" | "currentPlayerIconRef"
 >;
 type ExitElements = Pick<
   GameElements,
@@ -122,9 +128,6 @@ function queryScoreElements(gameRef: HTMLElement): ScoreElements {
     scoreOrangeRef: gameRef.querySelector<HTMLElement>("[data-score-orange]"),
     currentPlayerIconRef: gameRef.querySelector<HTMLImageElement>(
       "[data-current-player-icon]",
-    ),
-    currentPlayerNameRef: gameRef.querySelector<HTMLElement>(
-      "[data-current-player-name]",
     ),
   };
 }
@@ -165,11 +168,9 @@ function updateCurrentPlayerIcon(
   theme: string,
 ): void {
   const BASE_URL = import.meta.env.BASE_URL;
-  const { currentPlayerIconRef, currentPlayerNameRef } = elements;
+  const { currentPlayerIconRef } = elements;
   if (!currentPlayerIconRef) return;
   resetCurrentPlayerIconClasses(currentPlayerIconRef, state.currentPlayer);
-  if (currentPlayerNameRef)
-    currentPlayerNameRef.textContent = PLAYER_NAMES[state.currentPlayer];
 
   if (theme === "code") {
     currentPlayerIconRef.src = `${BASE_URL}assets/icons/player-${state.currentPlayer}.svg`;
