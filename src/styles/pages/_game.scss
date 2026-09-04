@@ -30,9 +30,6 @@ $gap--tight: fct.px-to-rem(8);
     gap: $gap--tight;
   }
 
-  // 36-card boards stack 6 rows of cards, which - together with the fixed
-  // 875px game container height - leaves very little vertical room; padding
-  // is cut to the minimum needed so the field never overflows the container.
   &--36 {
     padding-block: fct.px-to-rem(4);
   }
@@ -69,9 +66,6 @@ body[data-theme] {
     .game__bar {
       justify-content: center;
       gap: fct.px-to-rem(48);
-      // Unlike the other 3 themes, Code has no connecting bar background in
-      // the mockup - scores/current player/exit render as 3 separately
-      // floating elements over the page background.
       background-color: transparent;
     }
 
@@ -80,8 +74,6 @@ body[data-theme] {
       color: var(--text-tertiary);
     }
 
-    // --text-tertiary is mint for Code (not the mockup's white); the other
-    // 3 themes already have it white, so only Code needs this override.
     .game__current {
       color: var(--text-primary);
     }
@@ -117,9 +109,6 @@ body[data-theme] {
   }
 
   &[data-theme="games"] {
-    // Only Code keeps square exit buttons; Games/Projects use a rounded
-    // 10px corner per mentor feedback, Food gets its own image-border
-    // treatment further down instead of a CSS radius.
     .game__exit,
     .game__exit-dialog-cancel,
     .game__exit-dialog-confirm {
@@ -214,9 +203,6 @@ body[data-theme] {
       font-family: var(--font-secondary);
     }
 
-    // Food uses a hand-drawn frame image instead of a CSS border here; the
-    // box is sized to the SVG's native canvas (176x49) so background-size:
-    // 100% 100% doesn't stretch it off-proportion.
     .game__exit {
       width: fct.px-to-rem(176);
       height: fct.px-to-rem(49);
@@ -224,7 +210,8 @@ body[data-theme] {
       background: var(--btn-exit-header-bg);
       background-image: url("../../../public/assets/img/themes/food/exit-border.svg");
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-size: 110% 110%;
+      background-position: center;
       border-color: transparent;
       border-radius: fct.px-to-rem(10);
       color: var(--text-secondary);
@@ -242,25 +229,38 @@ body[data-theme] {
       justify-content: center;
       width: fct.px-to-rem(214);
       height: fct.px-to-rem(48);
-      background-color: var(--btn-secondary-bg);
+      background-color: var(--btn-primary-bg);
       background-image: url("../../../public/assets/img/themes/food/back-border.svg");
       background-repeat: no-repeat;
-      background-size: 100% 100%;
+      background-size: 110% 110%;
+      background-position: center;
       border-color: transparent;
       border-radius: fct.px-to-rem(10);
       color: var(--text-tertiary);
 
       &:hover {
-        filter: brightness(1.1);
+        background-color: var(--btn-secondary-bg);
+        filter: none;
       }
     }
 
     .game__exit-dialog-confirm {
-      background: var(--btn-exit-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fct.px-to-rem(176);
+      height: fct.px-to-rem(49);
+      background-color: var(--btn-exit-bg);
+      background-image: url("../../../public/assets/img/themes/food/exit-border.svg");
+      background-repeat: no-repeat;
+      background-size: 110% 110%;
+      background-position: center;
+      border: fct.px-to-rem(2) solid transparent;
+      border-radius: fct.px-to-rem(10);
       color: var(--text-secondary);
 
       &:hover {
-        background: var(--btn-exit-bg-hover);
+        background-color: var(--btn-exit-bg-hover);
         color: var(--text-tertiary);
         filter: none;
       }
@@ -346,9 +346,6 @@ body[data-theme] {
     flex-shrink: 0;
     width: fct.px-to-rem(20);
     height: fct.px-to-rem(20);
-    // logout.svg has a hardcoded fill (not currentColor) - used as a CSS
-    // mask instead of an <img> so it always matches the button's own text
-    // color across every theme/state.
     background-color: currentColor;
     mask-image: url("../../../public/assets/icons/logout.svg");
     -webkit-mask-image: url("../../../public/assets/icons/logout.svg");
@@ -390,8 +387,6 @@ body[data-theme] {
   }
 
   &__exit-dialog {
-    // Restores the browser's native auto-centering for <dialog>, which the
-    // global `* { margin: 0; }` reset (style.scss) otherwise overrides.
     margin: auto;
     flex-direction: column;
     align-items: center;
@@ -400,9 +395,6 @@ body[data-theme] {
     border: none;
     border-radius: 0;
     background-color: var(--bg-dialog-field);
-    // var(--text-tertiary) is white on games/projects/food, unreadable on
-    // this light dialog background - use the same literal dark color the
-    // Result-page score badge already uses on the same background.
     color: #1c1c1c;
     box-shadow: 0 fct.px-to-rem(8) fct.px-to-rem(24) rgba(0, 0, 0, 0.25);
 
@@ -448,7 +440,6 @@ body[data-theme] {
 
     &-confirm {
       border: none;
-      // Colors are set per theme below (&[data-theme="..."] blocks).
     }
   }
 }

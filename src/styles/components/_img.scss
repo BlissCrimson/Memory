@@ -16,11 +16,6 @@
   }
 
   &--big {
-    // Fixed (not absolute) so it anchors to the real viewport edge instead
-    // of the centered, width-limited .container - and so it can never add
-    // to the page's scrollable overflow (fixed elements are excluded from
-    // that calculation), which used to reappear as a scrollbar on displays
-    // running at non-100% OS scaling (e.g. 4K).
     position: fixed;
     left: fct.px-to-rem(-40);
     bottom: fct.px-to-rem(110);

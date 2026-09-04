@@ -5,10 +5,6 @@ body {
   background-color: var(--bg__start);
 }
 
-// Only affects pages whose #app child is shorter than the viewport (.game).
-// overflow:hidden is a safety net against page scrollbars; it doesn't clip
-// legitimate content since min-height (not height) still lets #app grow
-// with its content.
 #app {
   display: flex;
   flex-direction: column;
@@ -18,8 +14,6 @@ body {
   overflow: hidden;
 }
 
-// Home-page-only: stretches .container to #app's full height so .welcome
-// centers correctly.
 #app > .container {
   display: flex;
   flex-direction: column;
@@ -74,8 +68,6 @@ body {
     }
   }
 
-  // Headline/intro stay left-aligned (mentor feedback), but the Play button
-  // itself keeps its own horizontal centering per the design mockup.
   .button__entry {
     align-self: center;
   }
@@ -102,9 +94,6 @@ body {
 
   &:hover {
     filter: brightness(0.95);
-    // Scales the 250x100 box to 270x105 visually, without changing its
-    // layout size - avoids reflowing/shifting the centered content above
-    // it (and the scrollbar that reflow triggered).
     transform: scale(1.08, 1.05);
   }
 }
@@ -114,8 +103,6 @@ body {
   gap: fct.px-to-rem(16);
 }
 
-// Kept out of the flow so its height never pushes #app past one viewport
-// (that was breaking .welcome's vertical centering on tall viewports).
 #imprint {
   position: absolute;
   right: fct.px-to-rem(24);

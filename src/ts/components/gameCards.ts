@@ -33,8 +33,7 @@ function shuffle<T>(items: T[]): T[] {
  */
 function getPairImages(pairCount: number, themeValue: string): string[] {
   const BASE_URL = import.meta.env.BASE_URL;
-  const folder =
-    THEME_ASSET_FOLDERS[themeValue] ?? THEME_ASSET_FOLDERS.codes;
+  const folder = THEME_ASSET_FOLDERS[themeValue] ?? THEME_ASSET_FOLDERS.codes;
   const files = THEME_ASSET_FILES[folder] ?? THEME_ASSET_FILES.code;
   return Array.from(
     { length: pairCount },
@@ -99,9 +98,6 @@ function handleMatch(
 ): void {
   markCardsAsMatched(state);
   callbacks.onMatch();
-  // Delay by the card flip transition duration (.card__inner in _card.scss:
-  // transition: transform 0.4s ease) so the last card is visibly finished
-  // flipping before navigating away on game end.
   if (state.matchedCount === totalCards) {
     setTimeout(() => callbacks.onGameEnd(), 400);
   }

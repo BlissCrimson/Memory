@@ -94,9 +94,6 @@
   display: none;
 }
 
-// Design-specified gradients (exact angle/stops from Figma) - these replace
-// the generic --state-card-back-start/-end 2-stop/45deg default per theme
-// only where a design value has actually been provided.
 [data-theme="code"] .card__face--back {
   background: linear-gradient(212.26deg, #4dd5bc 29.42%, #286f62 123.94%);
 }
@@ -105,11 +102,6 @@
   background: linear-gradient(147.13deg, #ed1b76 1.28%, #0a2835 142.53%);
 }
 
-// Food uses a hand-drawn frame image instead of a CSS border-color (unlike
-// Code/Games/Projects, which rely on --border-default) to mark a matched pair.
-// The overlay is clipped to the card's own rounded corners (matching
-// border-radius + overflow:hidden on the front face) so the hand-drawn
-// border sits flush with the white surface instead of overhanging it.
 [data-theme="food"] .card.is-matched .card__face--front {
   overflow: hidden;
 

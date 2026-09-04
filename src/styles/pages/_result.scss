@@ -44,8 +44,6 @@
   pointer-events: none;
 }
 
-// CSS-drawn pieces (rather than the static confetti.svg banner) so the
-// animation can actually fall instead of just sitting as a fixed image.
 .result__confetti-piece {
   position: absolute;
   top: -5%;

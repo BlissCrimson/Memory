@@ -42,8 +42,6 @@ function registerGameOverAutoContinue(gameOverRef: HTMLElement): void {
   function goToResult() {
     if (hasStarted) return;
     hasStarted = true;
-    // Fade out before navigating so the switch to the winner/draw screen
-    // reads as one animated transition instead of an instant cut.
     continueRef?.classList.add("is-leaving");
     setTimeout(() => navigate("/result"), 250);
   }

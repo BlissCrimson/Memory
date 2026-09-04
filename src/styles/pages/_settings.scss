@@ -106,14 +106,10 @@
   flex-direction: column;
   align-items: flex-end;
   gap: fct.px-to-rem(24);
-  // Fixed width so the column never shifts .settings sideways when the
-  // bar's content changes; wide enough for the longest bar content (~668px).
   width: fct.px-to-rem(700);
 }
 
 .settings__preview {
-  // Sized so the bar below ends up flush with the bottom of the option
-  // list on the left (per the design mockup).
   margin-top: fct.px-to-rem(26);
 
   &[data-theme="projects"] {
@@ -138,10 +134,6 @@
 
 .settings__bar {
   @include mx.flex-row();
-  // Fixed width (not fit-content) so the bar - and the Start button after it
-  // - never resizes when a label changes to a shorter/longer selected value.
-  // 700px (not 660px) so the fixed-width labels/separators below actually
-  // fit without overflowing - see .settings__bar-label/-slash widths.
   width: fct.px-to-rem(700);
   height: fct.px-to-rem(80);
   flex-wrap: nowrap;
@@ -161,8 +153,6 @@
   }
 }
 
-// Groups the labels+separators so they center as a unit left of the Start
-// button, re-centering (not just re-lefting) as label text length changes.
 .settings__bar-labels {
   @include mx.flex-row();
   flex: 1 1 auto;
@@ -171,9 +161,6 @@
   min-width: 0;
 }
 
-// Fixed per-group width (sized to each group's longest possible label, e.g.
-// "DA Projects Theme" / "Orange Player" / "Board-36 Cards") so a text-length
-// change on selection never shifts the labels or separators around it.
 .settings__bar-label {
   flex: 0 0 auto;
   white-space: nowrap;
@@ -192,9 +179,6 @@
   }
 }
 
-// Fixed box around the separator icon so swapping between slash-line.svg and
-// slash-line-used.svg (different intrinsic aspect ratios) never changes the
-// bar's layout width.
 .settings__bar-slash {
   display: inline-flex;
   flex: 0 0 auto;
@@ -232,8 +216,6 @@
 
   &:not(:disabled):hover {
     filter: brightness(0.95);
-    // Scales the 130x55 box to 140x60 visually, without changing its
-    // layout size - avoids reflowing the settings__bar around it.
     transform: scale(1.0769, 1.0909);
   }
 
