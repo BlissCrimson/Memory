@@ -115,48 +115,6 @@
   }
 }
 
-.result__score {
-  @include mx.flex-row();
-  z-index: 1;
-  gap: fct.px-to-rem(24);
-  padding: fct.px-to-rem(12) fct.px-to-rem(24);
-  border-radius: fct.px-to-rem(8);
-  background-color: var(--bg-dialog-field);
-  color: #1c1c1c;
-  font-size: fct.px-to-rem(24);
-  font-weight: 700;
-
-  // Same swap as .game-over__score / .game__scores: Code's light
-  // --bg-dialog-field clashes with its dark theme, the other 3 themes keep
-  // the light badge since their --bg-dialog-field is already light.
-  [data-theme="code"] & {
-    background-color: var(--bg-surface);
-    color: var(--text-tertiary);
-  }
-}
-
-.result__score-label {
-  font-weight: 700;
-}
-
-.result__score-item {
-  @include mx.flex-row();
-  gap: fct.px-to-rem(8);
-
-  img {
-    width: fct.px-to-rem(24);
-    height: auto;
-  }
-
-  &--blue {
-    color: var(--text-player-blue);
-  }
-
-  &--orange {
-    color: var(--text-player-orange);
-  }
-}
-
 .result__button {
   z-index: 1;
   padding: fct.px-to-rem(12) fct.px-to-rem(24);

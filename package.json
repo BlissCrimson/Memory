@@ -16,6 +16,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "eslint-plugin-tsdoc": "^0.5.2",
     "playwright": "^1.62.1",
     "sass": "^1.102.0",
     "typescript": "^7.0.2",

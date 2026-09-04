@@ -22,6 +22,7 @@ const routes: Record<string, RouteHandler> = {
  * Renders the page corresponding to the given path.
  *
  * @param path - The path of the route to render.
+ * @returns {void}
  */
 export function renderRoute(path: string) {
   document.body.removeAttribute("data-theme");
@@ -35,24 +36,33 @@ export function renderRoute(path: string) {
 }
 
 /**
+ * Strips the base URL from a path and normalizes it to a route key.
+ *
+ * @param path - The path of the route to render.
+ * @param BASE_URL - The base URL the app is served from.
+ * @returns {string} The normalized route key.
+ */
+function stripBaseUrl(path: string, BASE_URL: string): string {
+  const stripped = path.slice(BASE_URL.length);
+  return stripped === "" ? "/" : "/" + stripped;
+}
+
+/**
  * Checks whether the path starts with the base URL and renders the matching route.
  *
  * @param path - The path of the route to render.
- * @param BASE_URL - The Url from the ground folder.
+ * @param BASE_URL - The base URL the app is served from.
  * @returns {void}
  */
 function startWithBaseUrl(path: string, BASE_URL: string) {
-  if (path.startsWith(BASE_URL)) {
-    const stripped = path.slice(BASE_URL.length);
-    const normalized = stripped === "" ? "/" : "/" + stripped;
-    const fallbackFn = routes[normalized];
-    if (fallbackFn) {
-      fallbackFn();
-      return;
-    } else {
-      render404Page();
-    }
+  if (!path.startsWith(BASE_URL)) {
+    render404Page();
     return;
+  }
+  const normalized = stripBaseUrl(path, BASE_URL);
+  const fallbackFn = routes[normalized];
+  if (fallbackFn) {
+    fallbackFn();
   } else {
     render404Page();
   }
@@ -62,6 +72,7 @@ function startWithBaseUrl(path: string, BASE_URL: string) {
  * Navigates to the specified route and renders the corresponding page.
  *
  * @param path - The path of the route to render.
+ * @returns {void}
  */
 export function navigate(path: string) {
   const BASE_URL = import.meta.env.BASE_URL;
@@ -71,7 +82,9 @@ export function navigate(path: string) {
 }
 
 /**
- * Render the 404 nerror page.
+ * Render the 404 error page.
+ *
+ * @returns {void}
  */
 function render404Page() {
   routes["/404"]();

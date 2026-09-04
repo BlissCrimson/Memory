@@ -1,13 +1,13 @@
 import { navigate } from "../../router";
 import { createErrorPage } from "../pages/404";
+import { buildFooterMarkup } from "./footer.templates";
 
-function buildFooterMarkup(): string {
-  const BASE_URL = import.meta.env.BASE_URL;
-  return `
-        <a class="link" href="${BASE_URL}imprint" data-imprint>Impressum</a>
-    `;
-}
-
+/**
+ * Registers the click handler for the imprint link in the footer.
+ *
+ * @param footerRef - The footer container element.
+ * @returns {void}
+ */
 function registerFooterLinkHandler(footerRef: Element): void {
   const imprintLinkRef = footerRef.querySelector("[data-imprint]");
   imprintLinkRef?.addEventListener("click", (event) => {

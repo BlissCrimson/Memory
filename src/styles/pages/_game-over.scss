@@ -64,11 +64,6 @@
   font-weight: 400;
 }
 
-.game-over__hint {
-  font-size: fct.px-to-rem(14);
-  opacity: 0.7;
-}
-
 .game-over__score {
   @include mx.flex-row();
   gap: fct.px-to-rem(24);

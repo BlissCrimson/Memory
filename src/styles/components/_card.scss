@@ -107,14 +107,22 @@
 
 // Food uses a hand-drawn frame image instead of a CSS border-color (unlike
 // Code/Games/Projects, which rely on --border-default) to mark a matched pair.
-[data-theme="food"] .card.is-matched .card__face--front::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("../../../public/assets/img/themes/food/match-border.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  pointer-events: none;
+// The overlay is clipped to the card's own rounded corners (matching
+// border-radius + overflow:hidden on the front face) so the hand-drawn
+// border sits flush with the white surface instead of overhanging it.
+[data-theme="food"] .card.is-matched .card__face--front {
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--card-radius, #{fct.px-to-rem(12)});
+    background-image: url("../../../public/assets/img/themes/food/match-border.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    pointer-events: none;
+  }
 }
 
 [data-theme="code"] .card.is-matched .card__face--front {

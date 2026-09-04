@@ -6,17 +6,20 @@ body {
 }
 
 // Only affects pages whose #app child is shorter than the viewport (.game).
+// overflow:hidden is a safety net against page scrollbars; it doesn't clip
+// legitimate content since min-height (not height) still lets #app grow
+// with its content.
 #app {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100dvh;
   position: relative;
+  overflow: hidden;
 }
 
 // Home-page-only: stretches .container to #app's full height so .welcome
-// centers correctly and the absolutely-positioned background icon anchors
-// to the viewport, not just to .welcome's own content height.
+// centers correctly.
 #app > .container {
   display: flex;
   flex-direction: column;

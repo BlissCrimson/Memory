@@ -1,6 +1,15 @@
 import { navigate } from "../../router";
-import { createGameField, type Player } from "../components/gameCards";
+import { createGameField } from "../components/gameCards";
 import { createErrorPage } from "./404";
+import { buildGameMarkup } from "./game.templates";
+import type { Player } from "../types/player.types";
+import type {
+  GameSettings,
+  GameElements,
+  GameState,
+  ScoreElements,
+  ExitElements,
+} from "../types/game.types";
 
 const THEME_MAP: Record<string, string> = {
   codes: "code",
@@ -9,37 +18,11 @@ const THEME_MAP: Record<string, string> = {
   food: "food",
 };
 
-/** Code shows arrow/flag player icons for the score badges; the other themes show plain pawn icons (same distinction as gameOver.ts/result.ts). */
-const SCORE_ICON: Record<string, string> = {
-  code: "assets/icons/player-{player}.svg",
-  games: "assets/icons/chess_pawn-{player}.svg",
-  projects: "assets/icons/chess_pawn-{player}.svg",
-  food: "assets/icons/chess_pawn-{player}.svg",
-};
-
-interface GameSettings {
-  themeValue: string;
-  theme: string;
-  startPlayer: Player;
-  boardSize: 16 | 24 | 36;
-}
-
-interface GameElements {
-  scoreBlueRef: HTMLElement | null;
-  scoreOrangeRef: HTMLElement | null;
-  currentPlayerIconRef: HTMLImageElement | null;
-  exitButtonRef: HTMLButtonElement | null;
-  exitDialogRef: HTMLDialogElement | null;
-  exitCancelRef: HTMLButtonElement | null;
-  exitConfirmRef: HTMLButtonElement | null;
-}
-
-interface GameState {
-  scoreBlue: number;
-  scoreOrange: number;
-  currentPlayer: Player;
-}
-
+/**
+ * Reads the game settings from session storage.
+ *
+ * @returns {GameSettings} The game settings, including the theme, starting player and board size.
+ */
 function readGameSettings(): GameSettings {
   const themeValue = sessionStorage.getItem("memory:theme") ?? "codes";
   const startPlayer =
@@ -47,81 +30,20 @@ function readGameSettings(): GameSettings {
   const boardSize = Number(
     sessionStorage.getItem("memory:boardSize") ?? "16",
   ) as 16 | 24 | 36;
-  return { themeValue, theme: THEME_MAP[themeValue] ?? "code", startPlayer, boardSize };
+  return {
+    themeValue,
+    theme: THEME_MAP[themeValue] ?? "code",
+    startPlayer,
+    boardSize,
+  };
 }
 
-// Code additionally shows a "Blue"/"Orange" text label (same distinction as
-// gameOver.ts/result.ts); the other themes rely on the icon color alone.
-function scoreMarkup(
-  theme: string,
-  color: "blue" | "orange",
-  iconSrc: string,
-): string {
-  const label =
-    theme === "code"
-      ? `<span class="game__score-label">${color === "blue" ? "Blue" : "Orange"}</span>`
-      : "";
-  return `
-                <span class="game__score game__score--${color}">
-                    <img src="${iconSrc}" alt="${color === "blue" ? "Blue" : "Orange"}">
-                    ${label}
-                    <span data-score-${color}>0</span>
-                </span>
-  `;
-}
-
-// Mockups order the score badges differently per theme: Code shows Blue
-// before Orange, the other 3 themes show Orange before Blue (same
-// distinction as gameOver.ts/result.ts).
-function buildScoresMarkup(theme: string): string {
-  const BASE_URL = import.meta.env.BASE_URL;
-  const blueIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "blue")}`;
-  const orangeIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "orange")}`;
-  return theme === "code"
-    ? scoreMarkup(theme, "blue", blueIconSrc) +
-        scoreMarkup(theme, "orange", orangeIconSrc)
-    : scoreMarkup(theme, "orange", orangeIconSrc) +
-        scoreMarkup(theme, "blue", blueIconSrc);
-}
-
-function buildGameMarkup(theme: string, startPlayer: Player): string {
-  return `
-    <div class="game" data-theme="${theme}">
-        <div class="game__bar">
-            <div class="game__scores">
-                ${buildScoresMarkup(theme)}
-            </div>
-            <p class="game__current">
-                Current player:
-                <img class="game__current-icon" data-current-player-icon alt="${startPlayer}">
-            </p>
-            <button class="button button__${theme} button__${theme}--exit game__exit" data-exit>
-                <span class="game__exit-icon" aria-hidden="true"></span>
-                Exit game
-            </button>
-        </div>
-        <div id="gameField"></div>
-
-        <dialog class="game__exit-dialog" data-exit-dialog>
-            <p class="game__exit-dialog-text">Are you sure you want to exit the game?</p>
-            <div class="game__exit-dialog-actions">
-                <button class="game__exit-dialog-cancel" data-exit-cancel>Back to game</button>
-                <button class="game__exit-dialog-confirm" data-exit-confirm>Exit game</button>
-            </div>
-        </dialog>
-    </div>
-  `;
-}
-
-type ScoreElements = Pick<
-  GameElements,
-  "scoreBlueRef" | "scoreOrangeRef" | "currentPlayerIconRef"
->;
-type ExitElements = Pick<
-  GameElements,
-  "exitButtonRef" | "exitDialogRef" | "exitCancelRef" | "exitConfirmRef"
->;
-
+/**
+ * Queries the score elements from the game reference and returns them as a ScoreElements object.
+ *
+ * @param gameRef - The game page container element.
+ * @returns {ScoreElements} The score elements.
+ */
 function queryScoreElements(gameRef: HTMLElement): ScoreElements {
   return {
     scoreBlueRef: gameRef.querySelector<HTMLElement>("[data-score-blue]"),
@@ -132,25 +54,42 @@ function queryScoreElements(gameRef: HTMLElement): ScoreElements {
   };
 }
 
+/**
+ * Queries the exit elements from the game reference and returns them as an ExitElements object.
+ *
+ * @param gameRef - The game page container element.
+ * @returns {ExitElements} The exit elements.
+ */
 function queryExitElements(gameRef: HTMLElement): ExitElements {
   return {
     exitButtonRef: gameRef.querySelector<HTMLButtonElement>("[data-exit]"),
-    exitDialogRef: gameRef.querySelector<HTMLDialogElement>(
-      "[data-exit-dialog]",
-    ),
-    exitCancelRef: gameRef.querySelector<HTMLButtonElement>(
-      "[data-exit-cancel]",
-    ),
+    exitDialogRef:
+      gameRef.querySelector<HTMLDialogElement>("[data-exit-dialog]"),
+    exitCancelRef:
+      gameRef.querySelector<HTMLButtonElement>("[data-exit-cancel]"),
     exitConfirmRef: gameRef.querySelector<HTMLButtonElement>(
       "[data-exit-confirm]",
     ),
   };
 }
 
+/**
+ * Queries the game elements (score and exit) from the game reference and returns them as a GameElements object.
+ *
+ * @param gameRef - The game page container element.
+ * @returns {GameElements} The game elements.
+ */
 function queryGameElements(gameRef: HTMLElement): GameElements {
   return { ...queryScoreElements(gameRef), ...queryExitElements(gameRef) };
 }
 
+/**
+ * Resets the current player icon classes and alt attribute based on the current player.
+ *
+ * @param icon - The current player icon element.
+ * @param player - The current player.
+ * @returns {void}
+ */
 function resetCurrentPlayerIconClasses(
   icon: HTMLImageElement,
   player: Player,
@@ -162,26 +101,67 @@ function resetCurrentPlayerIconClasses(
   );
 }
 
+/**
+ * Applies the current player icon for the code theme (arrow/flag icon per player).
+ *
+ * @param icon - The current player icon element.
+ * @param player - The current player.
+ * @returns {void}
+ */
+function applyCodeThemePlayerIcon(
+  icon: HTMLImageElement,
+  player: Player,
+): void {
+  const BASE_URL = import.meta.env.BASE_URL;
+  icon.src = `${BASE_URL}assets/icons/player-${player}.svg`;
+}
+
+/**
+ * Applies the current player icon for the non-code themes (shared pawn icon, colored via class).
+ *
+ * @param icon - The current player icon element.
+ * @param player - The current player.
+ * @returns {void}
+ */
+function applyDefaultThemePlayerIcon(
+  icon: HTMLImageElement,
+  player: Player,
+): void {
+  const BASE_URL = import.meta.env.BASE_URL;
+  icon.src = `${BASE_URL}assets/icons/chess_pawn-white.svg`;
+  icon.classList.add(`game__current-icon--${player}`);
+}
+
+/**
+ * Updates the current player icon based on the current player and theme.
+ *
+ * @param elements - The game elements.
+ * @param state - The current game state.
+ * @param theme - The active game theme.
+ * @returns {void}
+ */
 function updateCurrentPlayerIcon(
   elements: GameElements,
   state: GameState,
   theme: string,
 ): void {
-  const BASE_URL = import.meta.env.BASE_URL;
   const { currentPlayerIconRef } = elements;
   if (!currentPlayerIconRef) return;
   resetCurrentPlayerIconClasses(currentPlayerIconRef, state.currentPlayer);
 
   if (theme === "code") {
-    currentPlayerIconRef.src = `${BASE_URL}assets/icons/player-${state.currentPlayer}.svg`;
+    applyCodeThemePlayerIcon(currentPlayerIconRef, state.currentPlayer);
   } else {
-    currentPlayerIconRef.src = `${BASE_URL}assets/icons/chess_pawn-white.svg`;
-    currentPlayerIconRef.classList.add(
-      `game__current-icon--${state.currentPlayer}`,
-    );
+    applyDefaultThemePlayerIcon(currentPlayerIconRef, state.currentPlayer);
   }
 }
 
+/**
+ * Registers the event listeners for the exit dialog buttons and dialog itself.
+ *
+ * @param elements - The game elements.
+ * @returns {void}
+ */
 function registerExitDialogHandlers(elements: GameElements): void {
   const { exitButtonRef, exitDialogRef, exitCancelRef, exitConfirmRef } =
     elements;
@@ -193,6 +173,13 @@ function registerExitDialogHandlers(elements: GameElements): void {
   });
 }
 
+/**
+ * Handles the match callback by updating the score and current player based on the game state.
+ *
+ * @param elements - The game elements.
+ * @param state - The current game state.
+ * @returns {void}
+ */
 function handleMatchCallback(elements: GameElements, state: GameState): void {
   if (state.currentPlayer === "blue") {
     state.scoreBlue += 1;
@@ -205,6 +192,14 @@ function handleMatchCallback(elements: GameElements, state: GameState): void {
   }
 }
 
+/**
+ * Handles the mismatch callback by switching the current player and updating the current player icon based on the game state and theme.
+ *
+ * @param elements - The game elements.
+ * @param state - The current game state.
+ * @param theme - The active game theme.
+ * @returns {void}
+ */
 function handleMismatchCallback(
   elements: GameElements,
   state: GameState,
@@ -214,6 +209,12 @@ function handleMismatchCallback(
   updateCurrentPlayerIcon(elements, state, theme);
 }
 
+/**
+ * Handles the game end callback by storing the final scores in session storage and navigating to the game over page.
+ *
+ * @param state - The current game state.
+ * @returns {void}
+ */
 function handleGameEndCallback(state: GameState): void {
   sessionStorage.setItem(
     "memory:result",
@@ -222,6 +223,14 @@ function handleGameEndCallback(state: GameState): void {
   navigate("/game-over");
 }
 
+/**
+ * Registers the callbacks for the game field events.
+ *
+ * @param gameSettings - The game settings.
+ * @param elements - The game elements.
+ * @param state - The current game state.
+ * @returns {void}
+ */
 function registerGameFieldCallbacks(
   gameSettings: GameSettings,
   elements: GameElements,
@@ -235,6 +244,12 @@ function registerGameFieldCallbacks(
   });
 }
 
+/**
+ * Creates the initial game state with the specified starting player.
+ *
+ * @param startPlayer - The player who starts the round.
+ * @returns {GameState} The initial game state with scores set to 0 and the current player set to the specified starting player.
+ */
 function createInitialGameState(startPlayer: Player): GameState {
   return { scoreBlue: 0, scoreOrange: 0, currentPlayer: startPlayer };
 }

@@ -4,17 +4,10 @@ import "/src/styles/main.scss";
 init();
 
 /**
- * Start the router to changen pages.
+ * Start the router to change pages.
+ *
+ * @returns {void}
  */
 function init() {
   renderRoute(window.location.pathname);
-  // const fieldRef = document.getElementById("field");
-  // if (fieldRef) {
-  //   fieldRef.addEventListener("click", (e) => {
-  //     const card = (e.target as HTMLElement).closest(       ".card",     ) as HTMLButtonElement;
-  //     if (card) {
-  //       card.classList.toggle("is-flipped");
-  //     }
-  //   });
-  // }
 }

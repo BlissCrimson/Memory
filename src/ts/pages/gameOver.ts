@@ -1,10 +1,7 @@
 import { navigate } from "../../router";
 import { createErrorPage } from "./404";
-
-interface ResultScore {
-  blue: number;
-  orange: number;
-}
+import { buildGameOverMarkup } from "./gameOver.templates";
+import type { ResultScore } from "../types/score.types";
 
 const THEME_MAP: Record<string, string> = {
   codes: "code",
@@ -13,81 +10,31 @@ const THEME_MAP: Record<string, string> = {
   food: "food",
 };
 
-/** Code shows arrow/flag player icons + a "Blue"/"Orange" label; the other themes show plain pawn icons. */
-const SCORE_ICON: Record<string, string> = {
-  code: "assets/icons/player-{player}.svg",
-  games: "assets/icons/chess_pawn-{player}.svg",
-  projects: "assets/icons/chess_pawn-{player}.svg",
-  food: "assets/icons/chess_pawn-{player}.svg",
-};
-
-const AUTO_CONTINUE_DELAY_MS = 2500;
+const AUTO_CONTINUE_DELAY_MS = 3500;
 
 /**
- * Show the Game Over screen: theme-specific "Game over" wordmark plus the
- * final score, read from the score the game page wrote to sessionStorage
- * when the round ended. Clicking/tapping anywhere continues to /result.
+ * Reads the result score from session storage. If the score is not found or
+ * cannot be parsed, it returns a default score of { blue: 0, orange: 0 }.
  *
- * @returns {void}
+ * @returns {ResultScore} The result score.
  */
-export function createGameOverPage() {
-  const gameOverRef = document.querySelector<HTMLElement>("#app");
-  if (!gameOverRef) return createErrorPage();
-  const BASE_URL = import.meta.env.BASE_URL;
-
-  let score: ResultScore = { blue: 0, orange: 0 };
+function readGameOverScore(): ResultScore {
   const storedScore = sessionStorage.getItem("memory:result");
-  if (storedScore) {
-    try {
-      score = JSON.parse(storedScore);
-    } catch {
-      score = { blue: 0, orange: 0 };
-    }
+  if (!storedScore) return { blue: 0, orange: 0 };
+  try {
+    return JSON.parse(storedScore);
+  } catch {
+    return { blue: 0, orange: 0 };
   }
-
-  const themeValue = sessionStorage.getItem("memory:theme") ?? "codes";
-  const theme = THEME_MAP[themeValue] ?? "code";
-
-  const blueIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "blue")}`;
-  const orangeIconSrc = `${BASE_URL}${SCORE_ICON[theme].replace("{player}", "orange")}`;
-
-  const scoreItemMarkup = (
-    color: "blue" | "orange",
-    iconSrc: string,
-    value: number,
-  ) => `
-    <span class="game-over__score-item game-over__score-item--${color}">
-      <img src="${iconSrc}" alt="${color}">
-      ${theme === "code" ? `<span class="game-over__score-label">${color === "blue" ? "Blue" : "Orange"}</span>` : ""}
-      ${value}
-    </span>
-  `;
-
-  // Mockups order the score badges differently per theme: Code shows
-  // Blue before Orange, the other 3 themes show Orange before Blue.
-  const scoreItemsMarkup =
-    theme === "code"
-      ? scoreItemMarkup("blue", blueIconSrc, score.blue) +
-        scoreItemMarkup("orange", orangeIconSrc, score.orange)
-      : scoreItemMarkup("orange", orangeIconSrc, score.orange) +
-        scoreItemMarkup("blue", blueIconSrc, score.blue);
-
-  gameOverRef.innerHTML = `
-    <section class="game-over" data-theme="${theme}" role="button" tabindex="0" data-continue>
-      <h2 class="game-over__title">Game over</h2>
-      <p class="game-over__lead">Final score</p>
-      <div class="game-over__score">
-        ${scoreItemsMarkup}
-      </div>
-      <p class="game-over__hint">Tap to continue</p>
-    </section>
-  `;
-
-  registerGameOverAutoContinue(gameOverRef);
 }
 
-// Advances to /result on its own after a delay; tap/Enter still skip ahead
-// immediately (hasStarted guards against both firing).
+/**
+ * Advances to /result on its own after a delay; tap/Enter still skip ahead
+ * immediately (hasStarted guards against both firing).
+ *
+ * @param gameOverRef - The Game Over page container element.
+ * @returns {void}
+ */
 function registerGameOverAutoContinue(gameOverRef: HTMLElement): void {
   const continueRef = gameOverRef.querySelector<HTMLElement>("[data-continue]");
   let hasStarted = false;
@@ -109,4 +56,23 @@ function registerGameOverAutoContinue(gameOverRef: HTMLElement): void {
       goToResult();
     }
   });
+}
+
+/**
+ * Show the Game Over screen: theme-specific "Game over" wordmark plus the
+ * final score, read from the score the game page wrote to sessionStorage
+ * when the round ended. Clicking/tapping anywhere continues to /result.
+ *
+ * @returns {void}
+ */
+export function createGameOverPage() {
+  const gameOverRef = document.querySelector<HTMLElement>("#app");
+  if (!gameOverRef) return createErrorPage();
+
+  const score = readGameOverScore();
+  const themeValue = sessionStorage.getItem("memory:theme") ?? "codes";
+  const theme = THEME_MAP[themeValue] ?? "code";
+
+  gameOverRef.innerHTML = buildGameOverMarkup(theme, score);
+  registerGameOverAutoContinue(gameOverRef);
 }

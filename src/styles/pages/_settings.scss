@@ -140,7 +140,9 @@
   @include mx.flex-row();
   // Fixed width (not fit-content) so the bar - and the Start button after it
   // - never resizes when a label changes to a shorter/longer selected value.
-  width: fct.px-to-rem(660);
+  // 700px (not 660px) so the fixed-width labels/separators below actually
+  // fit without overflowing - see .settings__bar-label/-slash widths.
+  width: fct.px-to-rem(700);
   height: fct.px-to-rem(80);
   flex-wrap: nowrap;
   gap: fct.px-to-rem(16);
@@ -165,14 +167,46 @@
   @include mx.flex-row();
   flex: 1 1 auto;
   justify-content: center;
-  gap: fct.px-to-rem(16);
+  gap: fct.px-to-rem(8);
   min-width: 0;
+}
 
-  [data-bar-theme],
-  [data-bar-player],
-  [data-bar-board-size] {
-    flex: 0 0 auto;
-    white-space: nowrap;
+// Fixed per-group width (sized to each group's longest possible label, e.g.
+// "DA Projects Theme" / "Orange Player" / "Board-36 Cards") so a text-length
+// change on selection never shifts the labels or separators around it.
+.settings__bar-label {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  text-align: center;
+
+  &[data-bar-theme] {
+    width: fct.px-to-rem(150);
+  }
+
+  &[data-bar-player] {
+    width: fct.px-to-rem(115);
+  }
+
+  &[data-bar-board-size] {
+    width: fct.px-to-rem(125);
+  }
+}
+
+// Fixed box around the separator icon so swapping between slash-line.svg and
+// slash-line-used.svg (different intrinsic aspect ratios) never changes the
+// bar's layout width.
+.settings__bar-slash {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: fct.px-to-rem(34);
+  height: fct.px-to-rem(55);
+
+  .icon__entry--slash {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
   }
 }
 
